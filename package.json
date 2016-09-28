@@ -1,0 +1,12 @@
+{
+  "name": "e-manager",
+  "version": "0.0.1",
+  "description": "administrador de contenido de entretención",
+  "author": "Yordan Vera",
+  "main": "server.js",
+  "dependencies": {
+    "cheerio": "^0.22.0",
+    "express": "^4.14.0",
+    "request": "^2.75.0"
+  }
+}
