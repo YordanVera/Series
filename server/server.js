@@ -14,8 +14,25 @@ app.get('/scrape', function(req, res){
             var $ = cheerio.load(html);
             var title, release, rating;
             var json = {title : "", release : "", rating: ""};
+
+            $('.title_bar_wrapper').filter(function(){
+                var data = $(this);
+                var divs = data.children().find("div");
+                title = divs[9]['children'][1]['children'][0].data;
+                json.title = title;
+            });
         }
+
+        fs.writeFile('output.json', JSON.stringify(json, null, 4), function(err){
+
+            console.log('File successfully written! - Check your project directory for the output.json file');
+
+        });
     });
+
+
+
+    res.send('Check your console!');
 
 });
 
