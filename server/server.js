@@ -24,11 +24,10 @@ connection.query('SELECT id_serie, nombre FROM series', function(err, rows, fiel
     if (err) throw err;
     lista_series = _.cloneDeep(rows);
 });
-
 connection.end();
 
 var create_Request_Token = function () {
-    var _output = null;
+    //var _output = null;
     var optionsAPI = { method: 'GET',
         url: 'https://api.themoviedb.org/3/authentication/token/new',
         qs: { api_key: API_TMDB.key },
@@ -38,13 +37,15 @@ var create_Request_Token = function () {
     console.log('obteniendo token');
     request(optionsAPI, function (error, response, body) {
         if (error) throw new Error(error);
+        API_TMDB.request_token = body.request_token;
+        validate_Request_Token();
         //console.log(body);
-        _output = _.cloneDeep(body);
-        return _output;
+        //_output = _.cloneDeep(body);
+        //return _output;
     });
 };
 var validate_Request_Token = function () {
-    var _output = null;
+    //var _output = null;
     var optionsValidate = { method: 'GET',
         url: 'https://api.themoviedb.org/3/authentication/token/validate_with_login',
         qs:
@@ -56,17 +57,16 @@ var validate_Request_Token = function () {
         body: {},
         json: true };
     console.log('validando token');
-
     request(optionsValidate, function (error, response, body) {
         if (error) throw new Error(error);
+        create_Session();
         //console.log(body);
-        _output = _.cloneDeep(body);
+        //_output = _.cloneDeep(body);
     });
-    return _output;
+    //return _output;
 };
 var create_Session = function () {
-    var _output = null;
-    console.log('creando sesión');
+    //var _output = null;
     var options = { method: 'GET',
         url: 'https://api.themoviedb.org/3/authentication/session/new',
         qs:
@@ -75,23 +75,17 @@ var create_Session = function () {
         headers: { 'content-type': 'application/json' },
         body: {},
         json: true };
-
+    console.log('creando sesión');
     request(options, function (error, response, body) {
         if (error) throw new Error(error);
-        _output = _.cloneDeep(body);
+        //_output = _.cloneDeep(body);
+        console.log('Sesión creada');
     });
-    return _output;
+    //return _output;
 };
 
 var connect_TMDB = function () {
-    if(create_Request_Token().success){
-        API_TMDB.request_token = body.request_token;
-        if(validate_Request_Token().success){
-            if(create_Session().success){
-            console.log('Sesión creada. OK')
-          }
-      }
-  }
+    create_Request_Token();
 };
 
 connect_TMDB();
@@ -115,11 +109,45 @@ var setData = function (nombre) {
     return dataOutput;
 };
 var listGroupR = ['dimension', 'avs', 'immerse'];
-var generarTemporadas = function (serie) {
-    var _listaTemp = null;
 
-    return _listaTemp;
-};
+app.get('/step1', function (req, res) {
+    var seasons = null;
+    var options = { method: 'GET',
+        url: 'https://api.themoviedb.org/3/search/tv',
+        qs:
+        { page: '1',
+            query: lista_series[0].nombre,
+            language: 'en-US',
+            api_key: API_TMDB.key },
+        headers: { 'content-type': 'application/json' },
+        body: {},
+        json: true };
+    var id_serie_TMDB = null;
+    request(options, function (error, response, body) {
+        if (error) throw new Error(error);
+
+        if(body.results.length===1){
+            //se obtiene la id de la serie;
+            id_serie_TMDB=body.results[0].id;
+            var options = { method: 'GET',
+                url: 'https://api.themoviedb.org/3/tv/'+id_serie_TMDB,
+                qs:
+                { language: 'en-US',
+                    api_key: API_TMDB.key },
+                headers: { 'content-type': 'application/json' },
+                body: {},
+                json: true };
+
+            request(options, function (error, response, body) {
+                if (error) throw new Error(error);
+                //obtener temporadas de la serie
+                console.log(body);
+                seasons = _.cloneDeep(body.seasons);
+                //obtener capitulos???
+            });
+        }
+    });
+});
 app.get('/lista', function (req, res) {
     google.resultPerPage = 10;
     var nextCounter = 0;
