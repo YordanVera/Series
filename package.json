@@ -4,12 +4,37 @@
   "description": "administrador de contenido de entretención",
   "author": "Yordan Vera",
   "main": "server.js",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://yordan_vera_castillo@bitbucket.org/yordan_vera_castillo/series.git"
+  },
   "dependencies": {
+    "@angular/common": "^2.0.1",
+    "@angular/compiler": "^2.0.1",
+    "@angular/core": "^2.0.1",
+    "@angular/forms": "^2.0.1",
+    "@angular/http": "^2.0.1",
+    "@angular/platform-browser": "^2.0.1",
+    "@angular/platform-browser-dynamic": "^2.0.1",
+    "@angular/router": "^3.0.1",
+    "@angular/upgrade": "^2.0.1",
+    "angular-in-memory-web-api": "^0.1.5",
     "cheerio": "^0.22.0",
+    "core-js": "^2.4.1",
     "express": "^4.14.0",
     "google": "^2.1.0",
     "lodash": "^4.16.2",
     "mysql": "^2.11.1",
-    "request": "^2.75.0"
+    "reflect-metadata": "^0.1.8",
+    "request": "^2.75.0",
+    "rxjs": "^5.0.0-beta.12",
+    "systemjs": "^0.19.39",
+    "zone.js": "^0.6.25"
+  },
+  "devDependencies": {
+    "concurrently": "^3.1.0",
+    "typescript": "^2.0.3",
+    "typings": "^1.4.0"
   }
 }
