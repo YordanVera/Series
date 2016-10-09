@@ -23,21 +23,21 @@ gulp.task('clean', function () {
 //    });
 //});
 
-gulp.task('copy:node_modules', ['clean'], function() {
-    var source = './node_modules',
-        destination = './build/client/node_modules';
-
-    gulp.src(source + '/**/*', {base: source})
-        .pipe(watch(source, {base: source}))
-        .pipe(gulp.dest(destination));
-});
-
-//gulp.task('copy:node_modules', ['clean'], function () {
-//    return gulp.src([
-//            'node_modules/**/*'
-//        ])
-//        .pipe(gulp.dest('build/client/node_modules/'));
+//gulp.task('copy:node_modules', ['clean'], function() {
+//    var source = './node_modules',
+//        destination = './build/client/node_modules';
+//
+//    gulp.src(source + '/**', {base: source})
+//        .pipe(watch(source, {base: source}))
+//        .pipe(gulp.dest(destination));
 //});
+
+gulp.task('copy:node_modules', ['clean'], function () {
+    return gulp.src([
+            'node_modules/**/*'
+        ])
+        .pipe(gulp.dest('build/client/node_modules/'));
+});
 
 gulp.task('copy:configSystem', ['clean'], function () {
     return gulp.src([
@@ -65,6 +65,7 @@ gulp.task('compile', ['clean'], function () {
 gulp.task('build', [
     'compile',
     'copy:assets',
+    'copy:node_modules',
     'copy:configSystem'
 ]);
 
