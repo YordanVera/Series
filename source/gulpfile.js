@@ -34,24 +34,31 @@ gulp.task('clean', function () {
 //        .pipe(watch(source, {base: source}))
 //        .pipe(gulp.dest(destination));
 //});
-
-gulp.task('copy:node_modules', ['clean'], function () {
-    return gulp.src([
-            'node_modules/**/*'
-        ])
+gulp.task('copy:client_dep', ['clean'], function () {
+    var dep_list = require('./client/client_dependencies.json');
+    var modules = Object.keys(dep_list);
+    var moduleFiles = modules.map(function(module) {
+        return './node_modules/' + module + '/**/*.*';
+    });
+    return gulp.src(moduleFiles, { base: 'node_modules' })
         .pipe(gulp.dest('.././build/client/node_modules/'));
 });
-gulp.task('copy:node_modules2', ['clean'], function () {
-    return gulp.src([
-            'node_modules/**/*'
-        ])
+gulp.task('copy:server_dep', ['clean'], function () {
+    var dep_list = require('./server/server_dependencies.json');
+    var modules = Object.keys(dep_list);
+    var moduleFiles = modules.map(function(module) {
+        return 'node_modules/' + module + '/**/*.*';
+    });
+    return gulp.src(moduleFiles, { base: 'node_modules' })
         .pipe(gulp.dest('.././build/node_modules/'));
 });
 
 gulp.task('copy:assets', ['clean'], function() {
     return gulp.src([
         'client/*',
-        '!client/app/*.ts'],
+        '!client/app/*.ts',
+        '!client/client_dependencies.json',
+        '!server/server_dependencies.json'],
         { base : './' })
         .pipe(gulp.dest('../build'))
 });
@@ -71,8 +78,8 @@ gulp.task('compile', ['clean'], function () {
 gulp.task('build', [
     'compile',
     'copy:assets',
-    'copy:node_modules',
-    'copy:node_modules2'
+    'copy:client_dep',
+    'copy:server_dep'
 ]);
 
 gulp.task('default', ['build']);
