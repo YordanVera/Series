@@ -8,10 +8,13 @@ var path        = require('path');
 //elimina lo que esta en build, excepto node_modules por su peso
 gulp.task('clean', function () {
     return del.sync([
-        './build/server',
-        './build/client/**',
-        '!./build/client',
-        '!./build/client/node_modules/**']);
+        '.././build/server',
+        '.././build/client/**',
+        '!.././build/client',
+        '!.././build/client/node_modules/**']
+    ,{
+            'force': true
+        });
 });
 
 //gulp.task('copy:node_modules', function () {
@@ -36,18 +39,21 @@ gulp.task('copy:node_modules', ['clean'], function () {
     return gulp.src([
             'node_modules/**/*'
         ])
-        .pipe(gulp.dest('build/client/node_modules/'));
+        .pipe(gulp.dest('.././build/client/node_modules/'));
+});
+gulp.task('copy:node_modules2', ['clean'], function () {
+    return gulp.src([
+            'node_modules/**/*'
+        ])
+        .pipe(gulp.dest('.././build/node_modules/'));
 });
 
-gulp.task('copy:configSystem', ['clean'], function () {
-    return gulp.src([
-            'systemjs.config.js'
-        ])
-        .pipe(gulp.dest('build/client'));
-});
 gulp.task('copy:assets', ['clean'], function() {
-    return gulp.src(['client/*', 'index.html', 'styles.css', '!client/app/*.ts'], { base : './' })
-        .pipe(gulp.dest('build'))
+    return gulp.src([
+        'client/*',
+        '!client/app/*.ts'],
+        { base : './' })
+        .pipe(gulp.dest('../build'))
 });
 
 gulp.task('compile', ['clean'], function () {
@@ -59,14 +65,14 @@ gulp.task('compile', ['clean'], function () {
 
     return tsResult.js
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('./build'));
+        .pipe(gulp.dest('.././build'));
 });
 
 gulp.task('build', [
     'compile',
     'copy:assets',
     'copy:node_modules',
-    'copy:configSystem'
+    'copy:node_modules2'
 ]);
 
 gulp.task('default', ['build']);

@@ -1,3 +1,4 @@
+"use strict";
 /// <reference path="../typings/index.d.ts" />
 var bodyParser = require("body-parser");
 var express = require("express");
@@ -20,6 +21,7 @@ var ServerApp = (function () {
         res.sendFile(path.resolve('.') + '/build/client', 'index.html');
     };
     return ServerApp;
-})();
+}());
 exports.ServerApp = ServerApp;
+
 //# sourceMappingURL=serverApp.js.map
