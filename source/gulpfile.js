@@ -77,9 +77,7 @@ gulp.task('compile', ['clean'], function () {
 
 gulp.task('build', [
     'compile',
-    'copy:assets',
-    'copy:client_dep',
-    'copy:server_dep'
+    'copy:assets'
 ]);
 
 gulp.task('default', ['build']);

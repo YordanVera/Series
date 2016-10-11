@@ -3,14 +3,19 @@
 var bodyParser = require("body-parser");
 var express = require("express");
 var path = require("path");
+var Router = require("./router");
 var ServerApp = (function () {
     function ServerApp() {
         this._app = express();
         this._app.use(bodyParser.json());
         this._app.use(express.static(path.resolve('.') + '/build/client'));
+        this.Routes();
     }
     ServerApp.prototype.setRoutes = function () {
-        this._app.get('/*', this._indexRender);
+        //this._app.get('/*', this._indexRender);
+    };
+    ServerApp.prototype.Routes = function () {
+        this._app.use(Router);
     };
     ServerApp.prototype.startServer = function () {
         this._app.listen(5000, function () {
