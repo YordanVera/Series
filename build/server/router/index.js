@@ -27,23 +27,23 @@ router.post('/add_tvshow', function (req, res) {
     }
     else {
         //db add
-        pool.query('INSERT INTO series (nombre) VALUES (?)', [req.body.nombre_serie], function (error, result) {
+        pool.query('INSERT INTO series (nombre) VALUES (?)', [req.body.nombre], function (error, result) {
             if (error)
                 return res.json({ success: false, error: error });
             return res.json({
                 success: true,
-                id_serie: result[0].id_serie
+                id_serie: result.insertId
             });
         });
     }
 });
-router.delete('/del_tvshow', function (req, res) {
-    if (!req.body) {
+router.delete('/del_tvshow/:id_serie', function (req, res) {
+    if (!req.params) {
         return res.sendStatus(400);
     }
     else {
         //db del
-        pool.query('DELETE FROM series WHERE id_serie = ?', [req.body.id_serie], function (error) {
+        pool.query('DELETE FROM series WHERE id_serie = ?', [req.params.id_serie], function (error) {
             if (error)
                 return res.json({ success: false, error: error });
             return res.json({ success: true });
@@ -56,7 +56,7 @@ router.put('/update_tvshow', function (req, res) {
     }
     else {
         //db update
-        pool.query('UPDATE series SET nombre = ? WHERE id_serie = ?', [req.body.id_serie], function (error) {
+        pool.query('UPDATE series SET nombre = ? WHERE id_serie = ?', [req.body.nombre, req.body.id_serie], function (error) {
             if (error)
                 return res.json({ success: false, error: error });
             return res.json({ success: true });
