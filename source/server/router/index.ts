@@ -19,9 +19,11 @@ router.get('/list_tvshows', (req, res) => {
     if(!req.body){
         return res.sendStatus(400);
     }else{
-        pool.query('SELECT id_serie, nombre FROM series', function(err, rows, fields) {
-            if (err) throw err;
-            return res.json(rows);
+        pool.query('SELECT id_serie, nombre FROM series', (error, rows, fields) => {
+            if (error) return res.json({success: false, error: error});
+            return res.json({
+                success: true,
+                result: rows});
         });
     }
 });
@@ -31,25 +33,37 @@ router.post('/add_tvshow', (req, res) => {
         return res.sendStatus(400);
     }else{
         //db add
-        res.json({success: true});
+        pool.query('INSERT INTO series (nombre) VALUES (?)', [req.body.nombre_serie], (error, result) => {
+            if (error) return res.json({success: false, error: error});
+            return res.json({
+                success: true,
+                id_serie: result[0].id_serie
+            });
+        });
     }
 });
 
-router.post('/del_tvshow',(req, res) => {
+router.delete('/del_tvshow',(req, res) => {
     if(!req.body){
         return res.sendStatus(400);
     }else{
         //db del
-        res.json({success: true});
+        pool.query('DELETE FROM series WHERE id_serie = ?', [req.body.id_serie], (error) => {
+            if (error) return res.json({success: false, error: error});
+            return res.json({success: true});
+        });
     }
 });
 
-router.post('/update_tvshow',(req, res) => {
+router.put('/update_tvshow',(req, res) => {
     if(!req.body){
         return res.sendStatus(400);
     }else{
         //db update
-        res.json({success: true});
+        pool.query('UPDATE series SET nombre = ? WHERE id_serie = ?', [req.body.id_serie], (error) => {
+            if (error) return res.json({success: false, error: error});
+            return res.json({success:true});
+        });
     }
 });
 export = router;

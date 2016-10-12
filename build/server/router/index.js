@@ -12,10 +12,12 @@ router.get('/list_tvshows', function (req, res) {
         return res.sendStatus(400);
     }
     else {
-        pool.query('SELECT id_serie, nombre FROM series', function (err, rows, fields) {
-            if (err)
-                throw err;
-            return res.json(rows);
+        pool.query('SELECT id_serie, nombre FROM series', function (error, rows, fields) {
+            if (error)
+                return res.json({ success: false, error: error });
+            return res.json({
+                success: true,
+                result: rows });
         });
     }
 });
@@ -25,25 +27,40 @@ router.post('/add_tvshow', function (req, res) {
     }
     else {
         //db add
-        res.json({ success: true });
+        pool.query('INSERT INTO series (nombre) VALUES (?)', [req.body.nombre_serie], function (error, result) {
+            if (error)
+                return res.json({ success: false, error: error });
+            return res.json({
+                success: true,
+                id_serie: result[0].id_serie
+            });
+        });
     }
 });
-router.post('/del_tvshow', function (req, res) {
+router.delete('/del_tvshow', function (req, res) {
     if (!req.body) {
         return res.sendStatus(400);
     }
     else {
         //db del
-        res.json({ success: true });
+        pool.query('DELETE FROM series WHERE id_serie = ?', [req.body.id_serie], function (error) {
+            if (error)
+                return res.json({ success: false, error: error });
+            return res.json({ success: true });
+        });
     }
 });
-router.post('/update_tvshow', function (req, res) {
+router.put('/update_tvshow', function (req, res) {
     if (!req.body) {
         return res.sendStatus(400);
     }
     else {
         //db update
-        res.json({ success: true });
+        pool.query('UPDATE series SET nombre = ? WHERE id_serie = ?', [req.body.id_serie], function (error) {
+            if (error)
+                return res.json({ success: false, error: error });
+            return res.json({ success: true });
+        });
     }
 });
 module.exports = router;
