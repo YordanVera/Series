@@ -4,12 +4,19 @@ import * as mysql from 'mysql';
 import * as tvshowRoutes from './routes/tvshow';
 import {config_db} from '../config/config_db';
 import {config_tmdb} from '../config/config_tmdb';
+import * as path from 'path';
 
 let pool = mysql.createPool(config_db);
 let router = express.Router();
 
 router.get('/', (req, res) => {
-    res.sendFile('./build/client', 'index.html');
+    res.sendFile(path.resolve('../build/client/').replace(/\\/g, '/'), 'index.html');
+    //res.json({path: path.resolve('../build/client')});
+    //res.sendFile(path.resolve('../build/client'), 'index.html');
+});
+
+router.get('/test', (req, res)=>{
+    res.json({test: path.resolve('../build/client').replace(/\\/g, '/')});
 });
 
 router.get('/list_tvshows', (req, res) => {

@@ -10,7 +10,7 @@ export class ServerApp {
     constructor(){
         this._app = express();
         this._app.use(bodyParser.json());
-        this._app.use(express.static(path.resolve('.')+'/build/client'));
+        this._app.use(express.static(path.resolve('../')+'/build/client'));
         this.Routes();
     }
 
