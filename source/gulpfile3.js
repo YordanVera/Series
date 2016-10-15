@@ -95,7 +95,9 @@ gulp.task('compile', function () {
 
 gulp.task('build', [
     'compile',
-    'copy:assets'
+    'copy:assets',
+    'copy:client_dep',
+    'copy:server_dep'
 ]);
 
 gulp.task('default', ['build']);
