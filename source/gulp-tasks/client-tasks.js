@@ -2,7 +2,6 @@
 var     gulp        = require('gulp')
         sourcemaps  = require('gulp-sourcemaps'),
         ts          = require('gulp-typescript'),
-        gncd        = require('gulp-npm-copy-deps');
         path        = require('path'),
         copy_dep    = require('./rec_lib.js'),
         fs          = require('fs');;
