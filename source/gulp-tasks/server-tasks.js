@@ -6,19 +6,59 @@ var     gulp        = require('gulp'),
         nodemon     = require('gulp-nodemon');
 
 gulp.task('server-tasks', [
-    'nodemon',
+    'watch',
     'copy:server_dep'
 ]);
 
+
 //inicia nodemon (reinicia en caso de modificacion de archivos)
-gulp.task('nodemon', function(cb){
-    var started = false;
-    return nodemon({
-        script: path.resolve('../build/server/index.js')
-    }).on('start', function(){
-        if(!started) cb(); started=true;
+// var watching = false;
+// gulp.task('nodemon', function(cb){
+//     var started = false;
+//     var script_path = path.resolve('../build/server')+'/index.js';
+
+//         nodemon({script: script_path})
+//         .on('start', function () {
+//             console.info('Demon started');
+
+//             if (!watching) {
+//                 gulp.watch('../build/server/**', ['compile']);
+//                 //gulp.watch(assets.watch.scss, ['css']);
+//                 watching = true;
+//             }
+//         })
+//         .on('restart', function () {
+//             console.clear();
+//         });
+// });
+gulp.task('nodemon', function () {
+    var script_path = path.resolve('../build/server')+'/index.js';
+    nodemon({
+        script: script_path
+        , ext: 'js html'
+        , env: { 'NODE_ENV': 'development' }
     });
 });
+
+gulp.task('watch', ['compile'], function () {
+  var stream = nodemon({
+                 script: '../build/server/index.js' // run ES5 code
+               , watch: '../source/server' // watch ES2015 code
+               , tasks: ['compile'] // compile synchronously onChange
+               })
+
+  return stream
+})
+// gulp.task('develop', function(){
+//   gulp.start('scripts');
+//   nodemon({ 
+//     script: './server.js',
+//     env: { 'NODE_ENV': 'development' },
+//     ignore: ['public/dist/']
+//   })
+//   //have nodemon run watch on start
+//   .on('start', ['watch-public']);
+// });
 
 gulp.task('copy:server_dep', function() {
     var rootDir = path.resolve('../');
