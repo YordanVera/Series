@@ -2,7 +2,7 @@ import * as express from "express";
 
 let route = express.Router();
 route.get('/tvshows', (req, res) => {
-    console.log('test');
+    console.log('tesasddas adst');
     res.json({success : true});
 });
 
