@@ -5,8 +5,5 @@ gulp.task('default', ['build']);
 
 gulp.task('build', [
     'client-tasks',
-    'server-tasks',
-    'compile',
-    'watch'
-]);
-
+    'server-tasks']
+);
