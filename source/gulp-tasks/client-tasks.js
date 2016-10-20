@@ -11,13 +11,14 @@ gulp.task('client-tasks', [
     'watch:client'
 ]);
 gulp.task('watch:client', function(){
-        gulp.watch('../source/client/**/*.ts', ['compile:client']);
+    gulp.watch('../source/client/**/*.ts', ['compile:client']);
+    gulp.watch('../source/client/**', ['copy:assets']);
 });
 //copia los archivos para el cliente
 gulp.task('copy:assets', function() {
     return gulp.src([
-        'client/*',
-        '!client/app/*.ts',
+        'client/**/*',
+        '!client/app/**/*.ts',
         '!client/client_dependencies.json',
         '!client/tsconfig.json'],
         { base : './' })
