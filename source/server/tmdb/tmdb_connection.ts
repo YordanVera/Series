@@ -12,19 +12,21 @@ export class tmdb_connection   {
     private session             : tmdb_session;
     private status              : string = 'disconnected';
     private subject             : any;
+    private public_subject      : any;
 
     constructor(){
         this.subject = new Rx.Subject();
+        this.public_subject = new Rx.Subject();
         if(this.status === 'disconnected') this.connect_tmdb();
     }
-    public getSession(){
-        //if status === connected
-        //  return this.session
-        //else if status === connecting
-        //  return observable for data
-        //else 
-        //  connect_tmdb
-        //  return observable for data
+    public getSession(): {success:boolean,data:tmdb_session,subject:any}{
+        if(this.status === 'connected')
+            return {success: true, data: this.session, subject: null};
+        else    
+            return {success: false, data: null,subject: this.public_subject};        
+    }
+    public getStatus(){
+        return this.status;
     }
     private connect_tmdb(){
         this.session = new tmdb_session;
@@ -44,6 +46,7 @@ export class tmdb_connection   {
             },
             ()  => {
                 this.status = 'connected';
+                this.public_subject.next(this.session);
             }
         );
         this.Create_Request_Token();
