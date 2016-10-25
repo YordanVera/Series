@@ -1,4 +1,5 @@
 export class tmdb_session {
-    token       : string;
-    session_id  : string;
+    token           : string;
+    token_validated : boolean;
+    session_id      : string;
 }
