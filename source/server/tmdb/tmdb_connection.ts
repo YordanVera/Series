@@ -12,7 +12,7 @@ export class tmdb_connection   {
     private session             : tmdb_session;
     private status              : string = 'disconnected';
     private subject             : any;
-    private public_subject      : any;
+    public public_subject      : any;
 
     constructor(){
         this.subject = new Rx.Subject();
