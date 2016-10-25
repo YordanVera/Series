@@ -1,0 +1,1 @@
+{"version":3,"sources":["../app/cover/tvshow.ts"],"names":[],"mappings":";AAAA;IAAA;IAGA,CAAC;IAAD,aAAC;AAAD,CAHA,AAGC,IAAA;AAHY,cAAM,SAGlB,CAAA","file":"tvshow.js","sourcesContent":["export class TVShow {\r\n    id_serie    : number;\r\n    title       : string;\r\n}"]}

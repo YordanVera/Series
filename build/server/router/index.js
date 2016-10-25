@@ -2,10 +2,11 @@
 var express = require('express');
 var mysql = require('mysql');
 var config_db_1 = require('../config/config_db');
+var path = require('path');
 var pool = mysql.createPool(config_db_1.config_db);
 var router = express.Router();
 router.get('/', function (req, res) {
-    res.sendFile('./build/client', 'index.html');
+    res.sendFile(path.resolve('../build/client/').replace(/\\/g, '/'), 'index.html');
 });
 router.get('/list_tvshows', function (req, res) {
     if (!req.body) {
