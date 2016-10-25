@@ -2,12 +2,19 @@
   "globalDependencies": {
     "body-parser": "registry:dt/body-parser#0.0.0+20160619023215",
     "core-js": "registry:dt/core-js#0.0.0+20160914114559",
+    "es6-shim": "registry:dt/es6-shim#0.31.2+20160602141504",
     "express": "registry:dt/express#4.0.0+20160708185218",
     "express-serve-static-core": "registry:dt/express-serve-static-core#4.0.0+20160928124223",
+    "form-data": "registry:dt/form-data#0.0.0+20160724024111",
     "jasmine": "registry:dt/jasmine#2.5.0+20161003201800",
     "mime": "registry:dt/mime#0.0.0+20160316155526",
     "mysql": "registry:dt/mysql#0.0.0+20160316155526",
     "node": "registry:dt/node#6.0.0+20160928143418",
+    "request": "registry:dt/request#0.0.0+20160726020908",
+    "rx": "registry:dt/rx#0.0.0+20160317120654",
+    "rx-lite": "registry:dt/rx-lite#0.0.0+20160628114230",
+    "rx-node": "registry:dt/rx-node#0.0.0+20160513125029",
+    "rx.all": "registry:dt/rx.all#2.2.28+20160316155526",
     "serve-static": "registry:dt/serve-static#0.0.0+20160606155157"
   }
 }
