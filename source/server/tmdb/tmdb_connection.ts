@@ -1,6 +1,5 @@
 /// <reference path="../../typings/index.d.ts"/>
 import { tmdb_session } from './tmdn_session';
-import { Itmdb_connection } from './Itmdb_connection';
 import { config_tmdb } from '../config/config_tmdb';
 import * as request from 'request';
 import * as Rx from "rxjs/Rx";
@@ -12,7 +11,7 @@ export class tmdb_connection   {
     private session             : tmdb_session;
     private status              : string = 'disconnected';
     private subject             : any;
-    public public_subject      : any;
+    public  public_subject      : any;
 
     constructor(){
         this.subject = new Rx.Subject();
@@ -93,7 +92,7 @@ export class tmdb_connection   {
                 this.subject.unsubscribe();
             });
     }
-    private Create_query(url: string, qs: any, method?: string, headers?: any, body?: any, json?: boolean){
+    public Create_query(url: string, qs: any, method?: string, headers?: any, body?: any, json?: boolean){
         return {
             method  : (typeof method === 'undefined') ? 'GET':method,
             url     : (typeof url === 'undefined') ? '':url,
