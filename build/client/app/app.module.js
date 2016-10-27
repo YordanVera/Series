@@ -13,7 +13,10 @@ var core_2 = require('@angular/core');
 var http_1 = require('@angular/http');
 var platform_browser_1 = require('@angular/platform-browser');
 var material_1 = require('@angular/material');
-var cover_component_1 = require('./cover/cover.component');
+var app_component_1 = require('./app.component');
+var header_component_1 = require('./header/header.component');
+var body_component_1 = require('./body/body.component');
+var cover_component_1 = require('./body/cover/cover.component');
 core_2.enableProdMode();
 var AppModule = (function () {
     function AppModule() {
@@ -26,8 +29,12 @@ var AppModule = (function () {
                 http_1.JsonpModule,
                 material_1.MaterialModule.forRoot()],
             declarations: [
-                cover_component_1.CoverComponent],
-            bootstrap: [cover_component_1.CoverComponent]
+                app_component_1.AppComponent,
+                header_component_1.HeaderComponent,
+                body_component_1.BodyComponent,
+                cover_component_1.CoverComponent
+            ],
+            bootstrap: [app_component_1.AppComponent]
         }), 
         __metadata('design:paramtypes', [])
     ], AppModule);

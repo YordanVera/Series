@@ -23,7 +23,6 @@ var CoverService = (function () {
     };
     CoverService.prototype.extractData = function (res) {
         var body = res.json();
-        console.log(body.result);
         return body.result || {};
     };
     CoverService.prototype.handleError = function (error) {

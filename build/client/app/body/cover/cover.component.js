@@ -20,12 +20,14 @@ var CoverComponent = (function () {
     };
     CoverComponent.prototype.getTVShows = function () {
         var _this = this;
-        this.coverService.getTV_Shows().subscribe(function (list_tvshows) { return _this.list_tvshows = list_tvshows; }, function (error) { return _this.erroMessage = error; });
+        this.coverService.getTV_Shows().subscribe(function (list_tvshows) {
+            _this.list_tvshows = list_tvshows;
+        }, function (error) { return _this.erroMessage = error; });
     };
     CoverComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
-            selector: 'bodyETV',
+            selector: 'cover',
             templateUrl: './cover.component.html',
             providers: [cover_service_1.CoverService]
         }), 

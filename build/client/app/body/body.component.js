@@ -9,30 +9,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var cover_service_1 = require('./cover.service');
-var CoverComponent = (function () {
-    function CoverComponent(coverService) {
-        this.coverService = coverService;
-        this.mode = 'Observable';
+var BodyComponent = (function () {
+    function BodyComponent() {
     }
-    CoverComponent.prototype.ngOnInit = function () {
-        this.getTVShows();
-    };
-    CoverComponent.prototype.getTVShows = function () {
-        var _this = this;
-        this.coverService.getTV_Shows().subscribe(function (list_tvshows) { return _this.list_tvshows = list_tvshows; }, function (error) { return _this.erroMessage = error; });
-    };
-    CoverComponent = __decorate([
+    BodyComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
             selector: 'bodyETV',
-            templateUrl: './cover.component.html',
-            providers: [cover_service_1.CoverService]
+            templateUrl: './body.component.html'
         }), 
-        __metadata('design:paramtypes', [cover_service_1.CoverService])
-    ], CoverComponent);
-    return CoverComponent;
+        __metadata('design:paramtypes', [])
+    ], BodyComponent);
+    return BodyComponent;
 }());
-exports.CoverComponent = CoverComponent;
+exports.BodyComponent = BodyComponent;
 
-//# sourceMappingURL=cover.component.js.map
+//# sourceMappingURL=body.component.js.map
