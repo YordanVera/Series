@@ -4,7 +4,7 @@ import { TVShow }               from './tvshow';
 
 @Component({
     moduleId    : module.id, 
-    selector    : 'etv',
+    selector    : 'cover',
     templateUrl : './cover.component.html',
     providers   : [CoverService]
 })
@@ -21,8 +21,10 @@ export class CoverComponent implements OnInit {
 
     getTVShows(){
         this.coverService.getTV_Shows().subscribe(
-            list_tvshows => this.list_tvshows = list_tvshows,
-            error       => this.erroMessage = <any>error
+            list_tvshows    => {
+                this.list_tvshows = list_tvshows;
+            },
+            error           => this.erroMessage = <any>error
         );
     }
 }
