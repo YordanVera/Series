@@ -1,4 +1,3 @@
-/// <reference path="../../typings/index.d.ts"/>
 import { tmdb_session } from './tmdn_session';
 import { config_tmdb } from '../config/config_tmdb';
 import * as request from 'request';
