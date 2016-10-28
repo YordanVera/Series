@@ -1,0 +1,1 @@
+{"version":3,"sources":["../tmdb/tmdn_session.ts"],"names":[],"mappings":";AAAA;IAAA;IAIA,CAAC;IAAD,mBAAC;AAAD,CAJA,AAIC,IAAA;AAJY,oBAAY,eAIxB,CAAA","file":"tmdn_session.js","sourcesContent":["export class tmdb_session {\r\n    token           : string;\r\n    token_validated : boolean;\r\n    session_id      : string;\r\n}"]}
