@@ -2,6 +2,7 @@ import * as express from "express";
 import * as mysql from 'mysql';
 import { tmdb_services } from '../../../tmdb/tmdb_services';
 import {config_db} from '../../../config/config_db';
+import * as _ from 'lodash';
 
 export class tvshow_routes {
     private _app            : express.Express;
@@ -40,49 +41,48 @@ export class tvshow_routes {
                                         data.push({
                                             id_serie    : rows[index].id_serie,
                                             title       : rows[index].title,
-                                            data        : x.results[0]
-                                        });
+                                            data        : x.results[0]});
                                     }
                                     else{
-                                        x.results.forEach(element => {
-                                            if(rows[index].title === element.name){
-                                                data.push({
+                                        let tvshow = _.find(x.results, (o:any)=>{
+                                            return (
+                                                o.name === rows[index].title &&
+                                                o.poster_path.length > 1 &&
+                                                o.overview.length > 1
+                                            );
+                                        });
+                                        data.push({
                                                     id_serie    : rows[index].id_serie,
                                                     title       : rows[index].title,
-                                                    data        : element
-                                                });
-                                            }
-                                        });
+                                                    data        : tvshow});
                                     }
                                 },
                                 e   => {
                                     data.push({
                                         id_serie    : rows[index].id_serie,
                                         title       : rows[index].title,
-                                        data        : e
-                                    });
+                                        data        : e});
                                 },
                                 ()  => {
-                                    if(index===rows.length-1){
-                                       return res.json({success:true, result:data});
+                                    if(data.length===rows.length){
+                                        return res.json({success:true, result:data});
                                     }
                                 });
                         });
                 });
         });
     }
-    
     private add_tvshow(){
         this._app.post('/add_tvshow', (req, res) => {
             if(!req.body)
                 return res.sendStatus(400);
             else
-                this._pool.query('INSERT INTO series (title) VALUES (?)', [req.body.nombre], (error, result) => {
+                this._pool.query('INSERT INTO series (title) VALUES (?)', [req.body.TVShow_name], (error, result) => {
                     if (error) return res.json({success: false, error: error});
                     return res.json({
                         success: true,
                         id_serie: result.insertId
-                    });
+                    }); 
                 });
         });
     }
