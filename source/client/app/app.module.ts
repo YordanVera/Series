@@ -8,7 +8,7 @@ import { AppComponent }             from './app.component';
 import { HeaderComponent }          from './header/header.component';
 import { BodyComponent }            from './body/body.component';
 import { CoverComponent }           from './body/cover/cover.component';
-
+import { newDialogComponent }       from './header/newDialog.component';
 enableProdMode();
 
 @NgModule({
@@ -16,12 +16,17 @@ enableProdMode();
         BrowserModule, 
         HttpModule,
         JsonpModule,
+        FormsModule,
         MaterialModule.forRoot() ],
     declarations: [ 
         AppComponent,
         HeaderComponent,
         BodyComponent,
+        newDialogComponent,
         CoverComponent
+        ],
+        entryComponents: [
+            newDialogComponent
         ],
     bootstrap   : [ AppComponent ]
 })

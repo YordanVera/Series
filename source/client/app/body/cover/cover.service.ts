@@ -1,7 +1,7 @@
-import { Injectable }       from '@angular/core';
-import { Http, Headers, RequestOptions, Response }   from '@angular/http';
-import { Observable }       from 'rxjs/Observable';
-import { TVShow, dataTVShow }           from './tvshow';
+import { Injectable }                               from '@angular/core';
+import { Http, Headers, RequestOptions, Response }  from '@angular/http';
+import { Observable }                               from 'rxjs/Observable';
+import { TVShow, dataTVShow }                       from './tvshow';
 
 @Injectable()
 export class CoverService {
@@ -16,6 +16,7 @@ export class CoverService {
     }
     private extractData(res: Response){
         let body = res.json();
+        console.log(body.result);
         return body.result || {};
     }
 
@@ -25,5 +26,15 @@ export class CoverService {
 
         console.error(errMsg); // log to console instead
         return Observable.throw(errMsg);
+    }
+    newTV_Show(TVShow_name : string){
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        this.http.post('/add_tvshow',{"TVShow_name":TVShow_name},options).subscribe(
+            data => {
+                console.log(data._body);
+               //this.getTV_Shows();
+            }
+        );
     }
 }
