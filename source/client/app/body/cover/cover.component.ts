@@ -42,10 +42,10 @@ export class CoverComponent implements OnInit {
         );
     }
     private newTVShow(TVShow_name){
-        this.coverService.newTV_Show(TVShow_name).subscribe(
+        this.coverService.new_TVShow(TVShow_name).subscribe(
             result => { 
                 if(result.success){             
-                    this.coverService.getTV_Show(TVShow_name).subscribe(
+                    this.coverService.get_TVShow(TVShow_name).subscribe(
                         data => {
                             let newTV_Show = new TVShow();
                             newTV_Show.id_serie= result.id_serie;
