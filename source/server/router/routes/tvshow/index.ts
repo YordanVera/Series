@@ -119,10 +119,19 @@ export class tvshow_routes {
                 var subject : any = this._tmdb_services.getTVShowData(req.params.title);
                 subject.subscribe(
                     x   => {
-                        if(x.total_results === 1)
+                        if(x.total_results === 1){
                             return res.json({success:true, result:x.results[0]});
-                        else
-                            return res.json({success:false, result:x.results});
+                        }                            
+                        else{
+                            let tvshow = _.find(x.results, (o:any)=>{
+                                            return (
+                                                o.name === req.params.title &&
+                                                o.poster_path.length > 1 &&
+                                                o.overview.length > 1
+                                            );
+                                        });                           
+                             return res.json({success:true, result:tvshow});
+                        }
                     },
                     e   => {
                         return res.json({success:false, err:e});
