@@ -9,8 +9,8 @@ import { HeaderComponent }          from './header/header.component';
 import { BodyComponent }            from './body/body.component';
 import { CoverComponent }           from './body/cover/cover.component';
 import { newDialogComponent }       from './header/newDialog.component';
+import { deleteDialogComponent }    from './header/deleteDialog.component';
 enableProdMode();
-
 @NgModule({
     imports     : [ 
         BrowserModule, 
@@ -23,10 +23,12 @@ enableProdMode();
         HeaderComponent,
         BodyComponent,
         newDialogComponent,
+        deleteDialogComponent,
         CoverComponent
         ],
         entryComponents: [
-            newDialogComponent
+            newDialogComponent,
+            deleteDialogComponent
         ],
     bootstrap   : [ AppComponent ]
 })
