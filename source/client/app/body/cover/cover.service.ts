@@ -1,22 +1,21 @@
-import { Injectable }                               from '@angular/core';
+import { Injectable, EventEmitter }                               from '@angular/core';
 import { Http, Headers, RequestOptions, Response }  from '@angular/http';
 import { Observable }                               from 'rxjs/Observable';
 import { TVShow, dataTVShow }                       from './tvshow';
+import * as Rx                                      from "rxjs/Rx";
 
 @Injectable()
 export class CoverService {
     private TVShowUrl = '/list_tvshows';
+    constructor(private http : Http){  }
 
-    constructor(private http : Http){}
-
-    getTV_Shows (): Observable<TVShow[]>{
+    getAll_TVShows (){
         return this.http.get(this.TVShowUrl)
-                        .map(this.extractData)
-                        .catch(this.handleError);
+                         .map(this.extractData) 
+                         .catch(this.handleError);
     }
     private extractData(res: Response){
         let body = res.json();
-        console.log(body.result);
         return body.result || {};
     }
 
@@ -30,11 +29,13 @@ export class CoverService {
     newTV_Show(TVShow_name : string){
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
-        this.http.post('/add_tvshow',{"TVShow_name":TVShow_name},options).subscribe(
-            data => {
-                console.log(data._body);
-               //this.getTV_Shows();
-            }
-        );
+        return this.http.post('/add_tvshow',{"TVShow_name":TVShow_name},options)
+                        .map(res => res.json())
+                        .catch(this.handleError);
+    }
+    getTV_Show(TVShow_name : string){
+        return this.http.get('/get_tvshow_data/'+TVShow_name)
+                        .map(res => res.json())
+                        .catch(this.handleError);
     }
 }
