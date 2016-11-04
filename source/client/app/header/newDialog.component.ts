@@ -1,6 +1,5 @@
 import { Component, ViewContainerRef, Input, NgModule  }    from '@angular/core';
-import {MdDialog, MdDialogConfig, MdDialogRef, MdInput} from '@angular/material';
-
+import { MdDialog, MdDialogConfig, MdDialogRef, MdInput }   from '@angular/material';
 @Component({
     moduleId    : module.id,
     templateUrl : './newDialog.component.html'
