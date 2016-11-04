@@ -9,7 +9,7 @@ export class newDialogComponent {
     TVSHow_name: string;
   constructor(public dialogRef: MdDialogRef<newDialogComponent>
   ) { }
-  close(name){
+  close(){
       this.dialogRef.close();
   }
   acept(name){
