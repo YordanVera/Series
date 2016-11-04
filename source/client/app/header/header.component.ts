@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewContainerRef, Input }      from '@angular/core';
-import { MdDialog, MdDialogConfig, MdDialogRef }    from '@angular/material';
-import { newDialogComponent }                       from './newDialog.component'
-import { CoverService }                             from '../body/cover/cover.service';
-import { EmitterService }                           from '../emitter/emitter.service';
-import { Event }                                    from '../emitter/event';
+import { Component, OnInit, ViewContainerRef, Input }   from '@angular/core';
+import { MdDialog, MdDialogConfig, MdDialogRef }        from '@angular/material';
+import { newDialogComponent }                           from './newDialog.component';
+import { deleteDialogComponent }                        from './deleteDialog.component';
+import { EmitterService }                               from '../emitter/emitter.service';
+import { Event }                                        from '../emitter/event';
 
 @Component({
     moduleId    : module.id,
@@ -12,6 +12,7 @@ import { Event }                                    from '../emitter/event';
 })
 export class HeaderComponent implements OnInit {
     dialogRef: MdDialogRef<newDialogComponent>;
+    dialogRefDel: MdDialogRef<deleteDialogComponent>;
     lastCloseResult: string;
 
     constructor(
@@ -22,7 +23,7 @@ export class HeaderComponent implements OnInit {
 
         }
     ngOnInit(){ }
-    open() {
+    openNewDialog() {
         let config = new MdDialogConfig();
         config.viewContainerRef = this.viewContainerRef;
 
@@ -38,5 +39,20 @@ export class HeaderComponent implements OnInit {
             }
             this.dialogRef = null;
       });
+    }
+    openDeleteDialog(){
+        let config = new MdDialogConfig();
+        config.viewContainerRef = this.viewContainerRef;
+        
+        this.dialogRefDel = this.dialog.open(deleteDialogComponent, config);
+        this.dialogRefDel.afterClosed().subscribe(
+            result => {
+                //console.log(result);
+            }
+        );
+
+    }
+    openUpdateDialog(){
+
     }
 }
