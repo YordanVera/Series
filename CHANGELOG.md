@@ -2,6 +2,7 @@
 
 - se despliega la lista de series, obteniendo su data a través de la API de TMDB
 - se establecen las rutas básicas del lado del servidor para la conexión con la bd y con tmdb.
+- se habilita la opción para agregar nuevas series.
 
 **0.0.1-initial.1**
 
