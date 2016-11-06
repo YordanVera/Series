@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewContainerRef, Input }   from '@angular/core';
 import { MdDialog, MdDialogConfig, MdDialogRef }        from '@angular/material';
 import { newDialogComponent }                           from './newDialog.component';
-import { deleteDialogComponent }                        from './deleteDialog.component';
 import { EmitterService }                               from '../emitter/emitter.service';
 import { Event }                                        from '../emitter/event';
 
@@ -12,16 +11,13 @@ import { Event }                                        from '../emitter/event';
 })
 export class HeaderComponent implements OnInit {
     dialogRef: MdDialogRef<newDialogComponent>;
-    dialogRefDel: MdDialogRef<deleteDialogComponent>;
     lastCloseResult: string;
 
     constructor(
         public dialog: MdDialog,
         public viewContainerRef: ViewContainerRef,
         private emitter:EmitterService
-        ){
-
-        }
+        ){  }
     ngOnInit(){ }
     openNewDialog() {
         let config = new MdDialogConfig();
@@ -39,20 +35,5 @@ export class HeaderComponent implements OnInit {
             }
             this.dialogRef = null;
       });
-    }
-    openDeleteDialog(){
-        let config = new MdDialogConfig();
-        config.viewContainerRef = this.viewContainerRef;
-        
-        this.dialogRefDel = this.dialog.open(deleteDialogComponent, config);
-        this.dialogRefDel.afterClosed().subscribe(
-            result => {
-                //console.log(result);
-            }
-        );
-
-    }
-    openUpdateDialog(){
-
     }
 }

@@ -9,7 +9,7 @@ import { HeaderComponent }          from './header/header.component';
 import { BodyComponent }            from './body/body.component';
 import { CoverComponent }           from './body/cover/cover.component';
 import { newDialogComponent }       from './header/newDialog.component';
-import { deleteDialogComponent }    from './header/deleteDialog.component';
+
 enableProdMode();
 @NgModule({
     imports     : [ 
@@ -23,12 +23,10 @@ enableProdMode();
         HeaderComponent,
         BodyComponent,
         newDialogComponent,
-        deleteDialogComponent,
         CoverComponent
         ],
         entryComponents: [
-            newDialogComponent,
-            deleteDialogComponent
+            newDialogComponent
         ],
     bootstrap   : [ AppComponent ]
 })
