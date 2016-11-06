@@ -1,0 +1,20 @@
+<md-toolbar color="primary">
+    <span>Nuevo TVShow</span>
+</md-toolbar>
+<br>
+<div class="dialogContainer">
+    <table style="width: 100%" cellspacing="0">
+        <tr>
+            <td style="width: 100%">
+                <md-input #newTVShow placeholder="Nombre TVShow" style="width: 100%" type="text"></md-input>
+                {{TVShow_name}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button md-button (click)="acept(newTVShow.value)">Aceptar</button>
+                <button md-button (click)="close()">Cancelar</button>
+            </td>
+        </tr>
+    </table>
+</div>

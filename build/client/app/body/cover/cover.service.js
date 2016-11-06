@@ -16,7 +16,7 @@ var CoverService = (function () {
         this.http = http;
         this.TVShowUrl = '/list_tvshows';
     }
-    CoverService.prototype.getTV_Shows = function () {
+    CoverService.prototype.getAll_TVShows = function () {
         return this.http.get(this.TVShowUrl)
             .map(this.extractData)
             .catch(this.handleError);
@@ -30,6 +30,18 @@ var CoverService = (function () {
             error.status ? error.status + " - " + error.statusText : 'Server error';
         console.error(errMsg); // log to console instead
         return Observable_1.Observable.throw(errMsg);
+    };
+    CoverService.prototype.new_TVShow = function (TVShow_name) {
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.post('/add_tvshow', { "TVShow_name": TVShow_name }, options)
+            .map(function (res) { return res.json(); })
+            .catch(this.handleError);
+    };
+    CoverService.prototype.get_TVShow = function (TVShow_name) {
+        return this.http.get('/get_tvshow_data/' + TVShow_name)
+            .map(function (res) { return res.json(); })
+            .catch(this.handleError);
     };
     CoverService = __decorate([
         core_1.Injectable(), 

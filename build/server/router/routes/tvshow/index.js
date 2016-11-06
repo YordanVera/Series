@@ -1,6 +1,7 @@
 "use strict";
 var mysql = require('mysql');
 var config_db_1 = require('../../../config/config_db');
+var _ = require('lodash');
 var tvshow_routes = (function () {
     function tvshow_routes(app, tmdb_services) {
         this._app = app;
@@ -34,28 +35,26 @@ var tvshow_routes = (function () {
                                 data.push({
                                     id_serie: rows[index].id_serie,
                                     title: rows[index].title,
-                                    data: x.results[0]
-                                });
+                                    data: x.results[0] });
                             }
                             else {
-                                x.results.forEach(function (element) {
-                                    if (rows[index].title === element.name) {
-                                        data.push({
-                                            id_serie: rows[index].id_serie,
-                                            title: rows[index].title,
-                                            data: element
-                                        });
-                                    }
+                                var tvshow_1 = _.find(x.results, function (o) {
+                                    return (o.name === rows[index].title &&
+                                        o.poster_path.length > 1 &&
+                                        o.overview.length > 1);
                                 });
+                                data.push({
+                                    id_serie: rows[index].id_serie,
+                                    title: rows[index].title,
+                                    data: tvshow_1 });
                             }
                         }, function (e) {
                             data.push({
                                 id_serie: rows[index].id_serie,
                                 title: rows[index].title,
-                                data: e
-                            });
+                                data: e });
                         }, function () {
-                            if (index === rows.length - 1) {
+                            if (data.length === rows.length) {
                                 return res.json({ success: true, result: data });
                             }
                         });
@@ -69,7 +68,7 @@ var tvshow_routes = (function () {
             if (!req.body)
                 return res.sendStatus(400);
             else
-                _this._pool.query('INSERT INTO series (title) VALUES (?)', [req.body.nombre], function (error, result) {
+                _this._pool.query('INSERT INTO series (title) VALUES (?)', [req.body.TVShow_name], function (error, result) {
                     if (error)
                         return res.json({ success: false, error: error });
                     return res.json({
@@ -116,10 +115,17 @@ var tvshow_routes = (function () {
             else
                 var subject = _this._tmdb_services.getTVShowData(req.params.title);
             subject.subscribe(function (x) {
-                if (x.total_results === 1)
+                if (x.total_results === 1) {
                     return res.json({ success: true, result: x.results[0] });
-                else
-                    return res.json({ success: false, result: x.results });
+                }
+                else {
+                    var tvshow = _.find(x.results, function (o) {
+                        return (o.name === req.params.title &&
+                            o.poster_path.length > 1 &&
+                            o.overview.length > 1);
+                    });
+                    return res.json({ success: true, result: tvshow });
+                }
             }, function (e) {
                 return res.json({ success: false, err: e });
             });

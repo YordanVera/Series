@@ -10,19 +10,57 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var cover_service_1 = require('./cover.service');
+var tvshow_1 = require('./tvshow');
+var emitter_service_1 = require('../../emitter/emitter.service');
 var CoverComponent = (function () {
-    function CoverComponent(coverService) {
+    function CoverComponent(coverService, emitter) {
         this.coverService = coverService;
-        this.mode = 'Observable';
+        this.emitter = emitter;
     }
     CoverComponent.prototype.ngOnInit = function () {
         this.getTVShows();
+        this.listenEmitterService();
+    };
+    CoverComponent.prototype.loadTVShow = function (TVShow) {
+        console.log(TVShow.title);
     };
     CoverComponent.prototype.getTVShows = function () {
         var _this = this;
-        this.coverService.getTV_Shows().subscribe(function (list_tvshows) {
+        this.coverService.getAll_TVShows().subscribe(function (list_tvshows) {
             _this.list_tvshows = list_tvshows;
         }, function (error) { return _this.erroMessage = error; });
+    };
+    CoverComponent.prototype.listenEmitterService = function () {
+        var _this = this;
+        this.emitter.eventListen$.subscribe(function (event) {
+            if (event.type === 'new') {
+                _this.newTVShow(event.data.title);
+            }
+            else if (event.type === 'delete') {
+                _this.deleteTVShow();
+            }
+            else if (event.type === 'update') {
+                _this.updateTVShow();
+            }
+        });
+    };
+    CoverComponent.prototype.newTVShow = function (TVShow_name) {
+        var _this = this;
+        this.coverService.new_TVShow(TVShow_name).subscribe(function (result) {
+            if (result.success) {
+                _this.coverService.get_TVShow(TVShow_name).subscribe(function (data) {
+                    var newTV_Show = new tvshow_1.TVShow();
+                    newTV_Show.id_serie = result.id_serie;
+                    newTV_Show.title = TVShow_name;
+                    newTV_Show.data = data.result;
+                    _this.list_tvshows.push(newTV_Show);
+                });
+            }
+        });
+    };
+    CoverComponent.prototype.deleteTVShow = function () {
+    };
+    CoverComponent.prototype.updateTVShow = function () {
     };
     CoverComponent = __decorate([
         core_1.Component({
@@ -31,7 +69,7 @@ var CoverComponent = (function () {
             templateUrl: './cover.component.html',
             providers: [cover_service_1.CoverService]
         }), 
-        __metadata('design:paramtypes', [cover_service_1.CoverService])
+        __metadata('design:paramtypes', [cover_service_1.CoverService, emitter_service_1.EmitterService])
     ], CoverComponent);
     return CoverComponent;
 }());

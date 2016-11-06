@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../source/client/app/emitter/event.ts"],"names":[],"mappings":";AAAA;IAAA;IAGA,CAAC;IAAD,YAAC;AAAD,CAHA,AAGC,IAAA;AAHY,aAAK,QAGjB,CAAA","file":"event.js","sourcesContent":["export class Event {\r\n    type : 'new' | 'delete' | 'update';\r\n    data : any;\r\n}\r\n"]}

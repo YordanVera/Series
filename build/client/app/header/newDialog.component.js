@@ -9,22 +9,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var emitter_service_1 = require('./emitter/emitter.service');
-var AppComponent = (function () {
-    function AppComponent(emitter) {
-        this.emitter = emitter;
+var material_1 = require('@angular/material');
+var newDialogComponent = (function () {
+    function newDialogComponent(dialogRef) {
+        this.dialogRef = dialogRef;
     }
-    AppComponent = __decorate([
+    newDialogComponent.prototype.close = function () {
+        this.dialogRef.close();
+    };
+    newDialogComponent.prototype.acept = function (name) {
+        this.dialogRef.close(name);
+    };
+    newDialogComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
-            selector: 'app',
-            templateUrl: './app.component.html',
-            providers: [emitter_service_1.EmitterService]
+            templateUrl: './newDialog.component.html'
         }), 
-        __metadata('design:paramtypes', [emitter_service_1.EmitterService])
-    ], AppComponent);
-    return AppComponent;
+        __metadata('design:paramtypes', [material_1.MdDialogRef])
+    ], newDialogComponent);
+    return newDialogComponent;
 }());
-exports.AppComponent = AppComponent;
+exports.newDialogComponent = newDialogComponent;
 
-//# sourceMappingURL=app.component.js.map
+//# sourceMappingURL=newDialog.component.js.map

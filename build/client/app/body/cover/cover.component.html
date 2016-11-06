@@ -1,6 +1,6 @@
-<md-grid-list cols="5">
+<md-grid-list cols="5" rowHeight="290px">
   <md-grid-tile *ngFor="let serie of list_tvshows" >
-  <md-card>
+  <md-card class="md-card-custom" (click)="loadTVShow(serie)">
     <img src="http://image.tmdb.org/t/p/w154{{serie.data.poster_path}}">
   </md-card>
   </md-grid-tile>

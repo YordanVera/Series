@@ -12,11 +12,13 @@ var core_1 = require('@angular/core');
 var core_2 = require('@angular/core');
 var http_1 = require('@angular/http');
 var platform_browser_1 = require('@angular/platform-browser');
+var forms_1 = require('@angular/forms');
 var material_1 = require('@angular/material');
 var app_component_1 = require('./app.component');
 var header_component_1 = require('./header/header.component');
 var body_component_1 = require('./body/body.component');
 var cover_component_1 = require('./body/cover/cover.component');
+var newDialog_component_1 = require('./header/newDialog.component');
 core_2.enableProdMode();
 var AppModule = (function () {
     function AppModule() {
@@ -27,12 +29,17 @@ var AppModule = (function () {
                 platform_browser_1.BrowserModule,
                 http_1.HttpModule,
                 http_1.JsonpModule,
+                forms_1.FormsModule,
                 material_1.MaterialModule.forRoot()],
             declarations: [
                 app_component_1.AppComponent,
                 header_component_1.HeaderComponent,
                 body_component_1.BodyComponent,
+                newDialog_component_1.newDialogComponent,
                 cover_component_1.CoverComponent
+            ],
+            entryComponents: [
+                newDialog_component_1.newDialogComponent
             ],
             bootstrap: [app_component_1.AppComponent]
         }), 

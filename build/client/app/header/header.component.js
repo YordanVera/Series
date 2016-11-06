@@ -9,10 +9,32 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var material_1 = require('@angular/material');
+var newDialog_component_1 = require('./newDialog.component');
+var emitter_service_1 = require('../emitter/emitter.service');
+var event_1 = require('../emitter/event');
 var HeaderComponent = (function () {
-    function HeaderComponent() {
+    function HeaderComponent(dialog, viewContainerRef, emitter) {
+        this.dialog = dialog;
+        this.viewContainerRef = viewContainerRef;
+        this.emitter = emitter;
     }
-    HeaderComponent.prototype.ngOnInit = function () {
+    HeaderComponent.prototype.ngOnInit = function () { };
+    HeaderComponent.prototype.openNewDialog = function () {
+        var _this = this;
+        var config = new material_1.MdDialogConfig();
+        config.viewContainerRef = this.viewContainerRef;
+        this.dialogRef = this.dialog.open(newDialog_component_1.newDialogComponent, config);
+        this.dialogRef.afterClosed().subscribe(function (result) {
+            _this.lastCloseResult = result;
+            if (_this.lastCloseResult) {
+                var event_2 = new event_1.Event();
+                event_2.type = "new";
+                event_2.data = { title: _this.lastCloseResult };
+                _this.emitter.emit(event_2);
+            }
+            _this.dialogRef = null;
+        });
     };
     HeaderComponent = __decorate([
         core_1.Component({
@@ -20,7 +42,7 @@ var HeaderComponent = (function () {
             selector: 'headerETV',
             templateUrl: './header.component.html'
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [material_1.MdDialog, core_1.ViewContainerRef, emitter_service_1.EmitterService])
     ], HeaderComponent);
     return HeaderComponent;
 }());

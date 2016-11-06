@@ -9,22 +9,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var emitter_service_1 = require('./emitter/emitter.service');
-var AppComponent = (function () {
-    function AppComponent(emitter) {
-        this.emitter = emitter;
+var Rx = require('rxjs/Rx');
+var EmitterService = (function () {
+    function EmitterService() {
+        this.eventSource = new Rx.Subject();
+        this.eventListen$ = this.eventSource.asObservable();
     }
-    AppComponent = __decorate([
-        core_1.Component({
-            moduleId: module.id,
-            selector: 'app',
-            templateUrl: './app.component.html',
-            providers: [emitter_service_1.EmitterService]
-        }), 
-        __metadata('design:paramtypes', [emitter_service_1.EmitterService])
-    ], AppComponent);
-    return AppComponent;
+    EmitterService.prototype.emit = function (event) {
+        this.eventSource.next(event);
+    };
+    EmitterService = __decorate([
+        core_1.Injectable(), 
+        __metadata('design:paramtypes', [])
+    ], EmitterService);
+    return EmitterService;
 }());
-exports.AppComponent = AppComponent;
+exports.EmitterService = EmitterService;
 
-//# sourceMappingURL=app.component.js.map
+//# sourceMappingURL=emitter.service.js.map

@@ -1,5 +1,4 @@
 "use strict";
-/// <reference path="../../typings/index.d.ts"/>
 var tmdn_session_1 = require('./tmdn_session');
 var config_tmdb_1 = require('../config/config_tmdb');
 var request = require('request');
