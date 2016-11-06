@@ -18,6 +18,9 @@ export class CoverComponent implements OnInit {
         this.getTVShows();
         this.listenEmitterService();
     }
+    loadTVShow(TVShow : TVShow){
+        console.log(TVShow.title);
+    }
     getTVShows(){
         this.coverService.getAll_TVShows().subscribe(
             list_tvshows    => {
