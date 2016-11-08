@@ -1,1 +1,5 @@
-Detail of {{title}} :)
+<div *ngIf="!loading">
+    <img src="http://image.tmdb.org/t/p/w154{{TVShow.data.poster_path}}">
+    título: {{TVShow.title}}<br>
+    resumen: {{TVShow.data.overview}}
+</div>
