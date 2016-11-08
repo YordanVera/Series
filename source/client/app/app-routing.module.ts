@@ -5,8 +5,8 @@ import { CoverComponent }       from './body/cover/cover.component';
 import { DetailComponent }      from './body/detail/detail.component';
 
 const routes: Routes = [
-    { path: ''                      , component: CoverComponent     },
-    { path: 'TVShow/:TVShow_name'   , component: DetailComponent    }
+    { path: ''                          , component: CoverComponent     },
+    { path: 'TVShow/:TVShow_name/:id'   , component: DetailComponent    }
 ];
 @NgModule({
     imports: [ RouterModule.forRoot(routes, { useHash: true}) ],
