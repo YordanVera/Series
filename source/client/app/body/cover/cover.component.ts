@@ -18,9 +18,6 @@ export class CoverComponent implements OnInit {
         this.getTVShows();
         this.listenEmitterService();
     }
-    loadTVShow(TVShow : TVShow){
-        console.log(TVShow.title);
-    }
     getTVShows(){
         this.coverService.getAll_TVShows().subscribe(
             list_tvshows    => {
@@ -48,7 +45,7 @@ export class CoverComponent implements OnInit {
         this.coverService.new_TVShow(TVShow_name).subscribe(
             result => { 
                 if(result.success){             
-                    this.coverService.get_TVShow(TVShow_name).subscribe(
+                    this.coverService.get_TVShow_Detail(TVShow_name).subscribe(
                         data => {
                             let newTV_Show = new TVShow();
                             newTV_Show.id_serie= result.id_serie;

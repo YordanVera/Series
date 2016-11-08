@@ -33,7 +33,7 @@ export class CoverService {
                         .map(res => res.json())
                         .catch(this.handleError);
     }
-    get_TVShow(TVShow_name : string){
+    get_TVShow_Detail(TVShow_name : string){
         return this.http.get('/get_tvshow_data/'+TVShow_name)
                         .map(res => res.json())
                         .catch(this.handleError);
