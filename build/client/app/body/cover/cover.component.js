@@ -21,9 +21,6 @@ var CoverComponent = (function () {
         this.getTVShows();
         this.listenEmitterService();
     };
-    CoverComponent.prototype.loadTVShow = function (TVShow) {
-        console.log(TVShow.title);
-    };
     CoverComponent.prototype.getTVShows = function () {
         var _this = this;
         this.coverService.getAll_TVShows().subscribe(function (list_tvshows) {
@@ -48,7 +45,7 @@ var CoverComponent = (function () {
         var _this = this;
         this.coverService.new_TVShow(TVShow_name).subscribe(function (result) {
             if (result.success) {
-                _this.coverService.get_TVShow(TVShow_name).subscribe(function (data) {
+                _this.coverService.get_TVShow_Detail(TVShow_name).subscribe(function (data) {
                     var newTV_Show = new tvshow_1.TVShow();
                     newTV_Show.id_serie = result.id_serie;
                     newTV_Show.title = TVShow_name;
