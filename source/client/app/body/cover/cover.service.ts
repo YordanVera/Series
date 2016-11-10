@@ -38,4 +38,14 @@ export class CoverService {
                         .map(res => res.json())
                         .catch(this.handleError);
     }
+    get_TVShow_Full_Detail(id : number){
+        return this.http.get('/get_tvshow_full_data/'+id)
+                        .map(res => res.json())
+                        .catch(this.handleError);
+    }
+    get_Season_Detail(id : number, season_number : number){
+        return this.http.get('/get_season_detail/'+id+'/'+season_number)
+                        .map(res => res.json())
+                        .catch(this.handleError);
+    }
 }
