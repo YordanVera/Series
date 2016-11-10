@@ -1,4 +1,5 @@
 **0.0.3.fly.1**
+
 - se agrega el detalle por cada serie.
 - dentro del detalle de cada serie se puede acceder al listado de capítulos por temporada.
 
