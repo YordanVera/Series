@@ -1,0 +1,16 @@
+<div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="lgModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">S0{{season.season_number}}E0{{episode.episode_number}}: {{episode.name}}</h4>
+      </div>
+      <div class="modal-body">
+        <img src="http://image.tmdb.org/t/p/w154{{episode.still_path}}"><br>
+        {{episode.overview}}
+      </div>
+    </div>
+  </div>
+</div>
