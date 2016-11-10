@@ -1,0 +1,53 @@
+<div *ngIf="!_isLoading">
+    <md-grid-list cols="4">
+        <md-grid-tile [colspan]=1 [rowspan]=1>
+            <img src="http://image.tmdb.org/t/p/w185{{TVShow.data.poster_path}}">
+        </md-grid-tile>
+
+        <md-grid-tile [colspan]=3 [rowspan]=1>
+            <div style="padding-right: 8%">
+            <md-card>
+            <md-card-title>{{TVShow.title}}</md-card-title>
+            <md-card-subtitle>rating?</md-card-subtitle>
+                <md-card-content>
+                    <p style="text-align: justify;">{{TVShow.data.overview}}</p>
+                </md-card-content>
+            </md-card>
+            </div>
+        </md-grid-tile>
+
+    </md-grid-list>
+    <div *ngIf="!_isLoadingDetail">
+        <md-grid-list cols="5" rowHeight="307px">
+            <md-grid-tile *ngFor="let season of TVShow.data.full.seasons" [colspan]="1" [rowspan]="1">
+                <button md-button (click)="selectSeason(TVShow.data.id, season.season_number)" style="padding: 0px">
+                    <img src="http://image.tmdb.org/t/p/w154{{season.poster_path}}"><br>
+                    <strong>Season {{season.season_number}}</strong>
+                </button>
+            </md-grid-tile>
+        </md-grid-list>
+    </div>
+
+    <div *ngIf="_isSeasonSelected">
+        <div class="container custom-container">
+            <h2>Season {{season_selected.season_number}}</h2>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Episodio</th>
+                        <th>Torrent</th>
+                        <th>Subtítulo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let cap of season_selected.episodes">
+                        <td>{{TVShow.title}} - S0{{season_selected.season_number}}E0{{cap.episode_number}}</td>
+                        <td>.torrent</td>
+                        <td>.srt</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

@@ -48,5 +48,36 @@ export class tmdb_services {
             });
         return subject;
     }
-
+    public getTVShowFullData(id : number){
+        var subject = new Rx.Subject();
+        request(this.tmdb_connection.Create_query(
+            'https://api.themoviedb.org/3/tv/'+id,
+                {   language        : 'en-US',
+                    api_key         : config_tmdb.key },
+            ), (error, response, body)=> {
+                if(error){ 
+                    throw new Error(error);
+                }
+                subject.next(body);
+                subject.complete();
+                subject.unsubscribe();
+            });
+        return subject;
+    }
+    public getSeasonDetail(id : number, season_number: number){
+        var subject = new Rx.Subject();
+        request(this.tmdb_connection.Create_query(
+            'https://api.themoviedb.org/3/tv/'+id+'/season/'+season_number,
+                {   language        : 'en-US',
+                    api_key         : config_tmdb.key },
+            ), (error, response, body)=> {
+                if(error){ 
+                    throw new Error(error);
+                }
+                subject.next(body);
+                subject.complete();
+                subject.unsubscribe();
+            });
+        return subject;
+    }
 }

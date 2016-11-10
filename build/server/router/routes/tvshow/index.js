@@ -15,6 +15,8 @@ var tvshow_routes = (function () {
         this.del_tvshow();
         this.update_tvshow();
         this.get_tvshow_data();
+        this.get_tvshow_full_data();
+        this.get_season_detail();
     };
     tvshow_routes.prototype.list_tvshows = function () {
         var _this = this;
@@ -129,6 +131,32 @@ var tvshow_routes = (function () {
             }, function (e) {
                 return res.json({ success: false, err: e });
             });
+        });
+    };
+    tvshow_routes.prototype.get_tvshow_full_data = function () {
+        var _this = this;
+        this._app.get('/get_tvshow_full_data/:id', function (req, res) {
+            if (!req.body) {
+                return res.sendStatus(400);
+            }
+            else {
+                _this._tmdb_services.getTVShowFullData(req.params.id).subscribe(function (data) {
+                    return res.json({ success: true, result: data });
+                });
+            }
+        });
+    };
+    tvshow_routes.prototype.get_season_detail = function () {
+        var _this = this;
+        this._app.get('/get_season_detail/:id/:season_number', function (req, res) {
+            if (!req.body) {
+                return res.sendStatus(400);
+            }
+            else {
+                _this._tmdb_services.getSeasonDetail(req.params.id, req.params.season_number).subscribe(function (data) {
+                    return res.json({ success: true, result: data });
+                });
+            }
         });
     };
     return tvshow_routes;

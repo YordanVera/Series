@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 
 export class tvshow_routes {
     private _app            : express.Express;
-    private _tmdb_services  : tmdb_services; 
+    private _tmdb_services  : tmdb_services;
     private _pool           : any;
 
     constructor(app, tmdb_services){
@@ -21,6 +21,8 @@ export class tvshow_routes {
         this.del_tvshow();
         this.update_tvshow();
         this.get_tvshow_data();
+        this.get_tvshow_full_data();
+        this.get_season_detail();
     }
     private list_tvshows(){
         this._app.get('/list_tvshows',(req, res)=>{
@@ -82,7 +84,7 @@ export class tvshow_routes {
                     return res.json({
                         success: true,
                         id_serie: result.insertId
-                    }); 
+                    });
                 });
         });
     }
@@ -103,7 +105,7 @@ export class tvshow_routes {
                 return res.sendStatus(400);
             }else{
                 this._pool.query('UPDATE series SET title = ? WHERE id_serie = ?', [req.body.nombre, req.body.id_serie], (error) => {
-                    if (error) 
+                    if (error)
                         return res.json({success: false, error: error});
                     else
                         return res.json({success:true});
@@ -121,7 +123,7 @@ export class tvshow_routes {
                     x   => {
                         if(x.total_results === 1){
                             return res.json({success:true, result:x.results[0]});
-                        }                            
+                        }
                         else{
                             let tvshow = _.find(x.results, (o:any)=>{
                                             return (
@@ -129,7 +131,7 @@ export class tvshow_routes {
                                                 o.poster_path.length > 1 &&
                                                 o.overview.length > 1
                                             );
-                                        });                           
+                                        });
                              return res.json({success:true, result:tvshow});
                         }
                     },
@@ -137,6 +139,32 @@ export class tvshow_routes {
                         return res.json({success:false, err:e});
                     }
                 );
+        });
+    }
+    private get_tvshow_full_data(){
+        this._app.get('/get_tvshow_full_data/:id',(req, res)=>{
+            if(!req.body){
+                return res.sendStatus(400);
+            }else{
+                this._tmdb_services.getTVShowFullData(req.params.id).subscribe(
+                    data => {
+                        return res.json({success:true, result:data});
+                    }
+                );
+            }
+        });
+    }
+    private get_season_detail(){
+        this._app.get('/get_season_detail/:id/:season_number',(req, res)=>{
+            if(!req.body){
+                return res.sendStatus(400);
+            }else{
+                this._tmdb_services.getSeasonDetail(req.params.id, req.params.season_number).subscribe(
+                    data => {
+                        return res.json({success:true, result:data});
+                    }
+                );
+            }
         });
     }
 }

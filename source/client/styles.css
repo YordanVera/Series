@@ -1,6 +1,6 @@
 body {
     margin: 0em;
-    background-color: #f4f4f4;
+    background-color: #f4f4f4 !important;
 }
 header{
     margin: 0em;
@@ -34,4 +34,7 @@ md-card{
     0px 2px 40px -1px rgba(0, 0, 0, 0.2), 
     0px 1px 40px 0px rgba(0, 0, 0, 0.14), 
     0px 1px 40px 0px rgba(0, 0, 0, 0.12);
+}
+.custom-container{
+    background-color: #ffffff !important;
 }

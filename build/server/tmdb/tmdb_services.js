@@ -40,6 +40,32 @@ var tmdb_services = (function () {
         });
         return subject;
     };
+    tmdb_services.prototype.getTVShowFullData = function (id) {
+        var subject = new Rx.Subject();
+        request(this.tmdb_connection.Create_query('https://api.themoviedb.org/3/tv/' + id, { language: 'en-US',
+            api_key: config_tmdb_1.config_tmdb.key }), function (error, response, body) {
+            if (error) {
+                throw new Error(error);
+            }
+            subject.next(body);
+            subject.complete();
+            subject.unsubscribe();
+        });
+        return subject;
+    };
+    tmdb_services.prototype.getSeasonDetail = function (id, season_number) {
+        var subject = new Rx.Subject();
+        request(this.tmdb_connection.Create_query('https://api.themoviedb.org/3/tv/' + id + '/season/' + season_number, { language: 'en-US',
+            api_key: config_tmdb_1.config_tmdb.key }), function (error, response, body) {
+            if (error) {
+                throw new Error(error);
+            }
+            subject.next(body);
+            subject.complete();
+            subject.unsubscribe();
+        });
+        return subject;
+    };
     return tmdb_services;
 }());
 exports.tmdb_services = tmdb_services;

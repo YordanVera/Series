@@ -38,8 +38,18 @@ var CoverService = (function () {
             .map(function (res) { return res.json(); })
             .catch(this.handleError);
     };
-    CoverService.prototype.get_TVShow = function (TVShow_name) {
+    CoverService.prototype.get_TVShow_Detail = function (TVShow_name) {
         return this.http.get('/get_tvshow_data/' + TVShow_name)
+            .map(function (res) { return res.json(); })
+            .catch(this.handleError);
+    };
+    CoverService.prototype.get_TVShow_Full_Detail = function (id) {
+        return this.http.get('/get_tvshow_full_data/' + id)
+            .map(function (res) { return res.json(); })
+            .catch(this.handleError);
+    };
+    CoverService.prototype.get_Season_Detail = function (id, season_number) {
+        return this.http.get('/get_season_detail/' + id + '/' + season_number)
             .map(function (res) { return res.json(); })
             .catch(this.handleError);
     };
