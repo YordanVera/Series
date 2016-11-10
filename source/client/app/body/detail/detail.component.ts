@@ -3,6 +3,7 @@ import { ActivatedRoute, Params }   from '@angular/router';
 import { Location }                 from '@angular/common';
 import { CoverService }             from '../cover/cover.service';
 import { TVShow }                   from '../cover/tvshow';
+
 @Component({
     moduleId    : module.id, 
     selector    : 'detail',
@@ -10,13 +11,21 @@ import { TVShow }                   from '../cover/tvshow';
     providers   : [CoverService]
 })
 export class DetailComponent {
-    private TVShow : TVShow;
-    private loading: boolean;
+    private TVShow  : TVShow;
+    private season_selected;
+
+    private _isLoading : boolean;
+    private _isLoadingDetail : boolean;
+    private _isSeasonSelected : boolean;
+
+    private caps : Array<number>;
+
     constructor(private route           : ActivatedRoute,
                 private location        : Location,
                 private coverService    : CoverService){
                     this.TVShow = new TVShow;
-                    this.loading = true;
+                    this._isLoading = this._isLoadingDetail = true;
+                    this._isSeasonSelected = false; 
                  }
     
     ngOnInit(): void {
@@ -31,7 +40,25 @@ export class DetailComponent {
         this.coverService.get_TVShow_Detail(this.TVShow.title).subscribe(
             data => {
                 this.TVShow.data = data.result;
-                this.loading = false;
+                this._isLoading = false;
+                this.getFullDetail(this.TVShow.data.id);
+            }
+        );
+    }
+    getFullDetail(id: number){
+        this.coverService.get_TVShow_Full_Detail(id).subscribe(
+            data => {
+                this.TVShow.data.full = data.result;
+                this._isLoadingDetail = false;
+            }
+        );
+    }
+    selectSeason(id:number, season_number:number){
+        this.coverService.get_Season_Detail(id,season_number).subscribe(
+            data => {
+                console.log(data.result);
+                this.season_selected=data.result;
+                this._isSeasonSelected=true;
             }
         );
     }
