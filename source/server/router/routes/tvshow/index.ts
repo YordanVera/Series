@@ -1,8 +1,9 @@
-import * as express from "express";
-import * as mysql from 'mysql';
-import { tmdb_services } from '../../../tmdb/tmdb_services';
-import {config_db} from '../../../config/config_db';
-import * as _ from 'lodash';
+import * as express         from "express";
+import * as mysql           from 'mysql';
+import * as _               from 'lodash';
+// import * as google          from 'google';
+import { tmdb_services }    from '../../../tmdb/tmdb_services';
+import { config_db }        from '../../../config/config_db';
 
 export class tvshow_routes {
     private _app            : express.Express;
@@ -23,6 +24,7 @@ export class tvshow_routes {
         this.get_tvshow_data();
         this.get_tvshow_full_data();
         this.get_season_detail();
+        this.get_torrents();
     }
     private list_tvshows(){
         this._app.get('/list_tvshows',(req, res)=>{
@@ -165,6 +167,32 @@ export class tvshow_routes {
                     }
                 );
             }
+        });
+    }
+    private get_torrents(){
+        this._app.get('/get_torrents/:TVShow_name/:season/:episode',(req, res)=>{
+            if(!req.body){
+                return res.sendStatus(400);
+            }else{
+                var google = require('google');
+                google.resultPerPage=10;
+                var nextCounter = 0;
+                google(req.params.TVShow_name+'.S0'+req.params.season+'.E0'+req.params.episode+' 720p site:extratorrent.cc', function(err, res){
+                    if(err){
+                        console.log(err);
+                    }else{
+                          console.log(res.links);
+                    }
+                })
+            }
+        });
+    }
+    protected select_links(links:any, TVShow_name:string, season:number, episode:number){
+        let _links = [];
+        //por cada link en links
+        //si el nombre es el mismo poner en la lista definitiva
+        _.forEach(links, (element)=>{
+            
         });
     }
 }
