@@ -47,7 +47,7 @@
                             <button md-raised-button color="primary" (click)="c.show()">
                                 Show
                             </button>
-                            <episode-modal #c="child" [episode]='cap' [season]='season_selected'></episode-modal>
+                            <episode-modal #c="child" [episode]='cap' [season]='season_selected' [TVShow]='TVShow.title'></episode-modal>
                         </td>
                     </tr>
                 </tbody>
