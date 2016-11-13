@@ -1,6 +1,8 @@
 import * as express         from "express";
 import * as mysql           from 'mysql';
 import * as _               from 'lodash';
+import * as request         from 'request';
+import * as cheerio         from 'cheerio';
 // import * as google          from 'google';
 import { tmdb_services }    from '../../../tmdb/tmdb_services';
 import { config_db }        from '../../../config/config_db';
@@ -176,23 +178,127 @@ export class tvshow_routes {
             }else{
                 var google = require('google');
                 google.resultPerPage=10;
-                var nextCounter = 0;
+                let _self = this;
+                let _res = res;
                 google(req.params.TVShow_name+'.S0'+req.params.season+'.E0'+req.params.episode+' 720p site:extratorrent.cc', function(err, res){
                     if(err){
                         console.log(err);
                     }else{
-                          console.log(res.links);
+                        let result = _self.select_links(res.links,req.params.TVShow_name,req.params.season,req.params.episode);
+                        result = _self.groups_release(result);
+                        result = _self.delete_duplicate(result);
+                        result = _self.torrent_link(result);
+                        //_self.get_info_torrent(result[0].torrent);
+
+                        _self.get_info_torrents(result);
+
+                        return _res.json({success:true, result:result});
                     }
-                })
+                });
+                
             }
         });
     }
-    protected select_links(links:any, TVShow_name:string, season:number, episode:number){
+    // [*] primero: se asegura que los links correspondan exclusivamente al capítulo
+    protected select_links(links:any, TVShow_name: string, season:number, episode:number){
         let _links = [];
-        //por cada link en links
-        //si el nombre es el mismo poner en la lista definitiva
         _.forEach(links, (element)=>{
+            if(element.title.indexOf(TVShow_name) !== -1){
+                if(element.title.indexOf('S0'+season+'E0'+episode) !== -1){
+                //console.log(element.title);
+                _links.push(element);
+                }
+            }
             
+        });
+        return _links;
+    }
+    // [*] segundo: obtener grupos de los links
+    protected groups_release(links){
+        let _links = links;
+        let _group_list = [
+            'dimension',
+            'avs',
+            'sva',
+            'hevc',
+            'batv',
+            'ctrlhd',
+            'd-zon3',
+            'ntb',
+            'don',
+            'form',
+            'xander',
+            'killers',
+            'lol',
+            'river',
+            'fum',
+            'fleet',
+            'shaanig',
+            'bajskorv'];
+        _.forEach(_links, (element, index)=>{
+            _.forEach(_group_list, (group)=>{
+                let title : string = _.lowerCase(element.title);
+                let grupo : string = group;
+                if(title.indexOf(grupo) !== -1){
+                    _links[index]["group"] = grupo;
+                }
+            });
+        });
+        return _links;
+    }
+    protected delete_duplicate(links){
+        let _links = links;
+        let _finale_links = [];
+        _.forEach(_links, (element, index)=>{
+            if(_finale_links.length===0){
+                _finale_links.push(element);
+            }else{
+                var link_splited = _.split(element.href, '/'); 
+                var link_id = link_splited[4];
+                var counter = 0;
+                _.forEach(_finale_links, (e, i)=>{
+                    var finale_link = _.split(e.href, '/'); 
+                    var finale_link_id = finale_link[4];
+                    if(finale_link_id === link_id){
+                        counter++;
+                    }
+                });
+                if(counter===0){
+                    _finale_links.push(element);
+                }
+            }
+        });
+        return _finale_links;
+    }
+    // [*] tercer: obtener links de los .torrent
+    protected torrent_link(links){
+        let _links = [];
+        
+        _.forEach(links, (element, index)=>{
+            let e = element;
+            var link_splited = _.split(element.href, '/'); 
+            e["torrent"] = link_splited[0]+'//'+link_splited[2]+'/download/'+link_splited[4]+'/'+link_splited[5];
+            _links.push(e);
+        });
+        return _links;
+    } 
+    //cuarto: obtener data en relación a seeders y leechers
+    protected get_info_torrents(links){
+        let _links = [];
+        _.forEach(links, (element)=>{
+            let _link = _.replace(element.href, '/download/','/torrent/');
+            console.log(_link);
+            request(_link, (error, response, html)=>{
+                if(!error){
+                    var $ = cheerio.load(html);
+                    $('td.tabledata0').filter(function(index){
+                        if(index===4){
+                            console.log($(this).text());
+                        }
+                        return true;
+                    });
+                }
+            });
         });
     }
 }
