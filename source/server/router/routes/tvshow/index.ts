@@ -3,6 +3,7 @@ import * as mysql           from 'mysql';
 import * as _               from 'lodash';
 import * as request         from 'request';
 import * as cheerio         from 'cheerio';
+import * as Rx              from 'rxjs/Rx';
 // import * as google          from 'google';
 import { tmdb_services }    from '../../../tmdb/tmdb_services';
 import { config_db }        from '../../../config/config_db';
@@ -188,11 +189,12 @@ export class tvshow_routes {
                         result = _self.groups_release(result);
                         result = _self.delete_duplicate(result);
                         result = _self.torrent_link(result);
-                        //_self.get_info_torrent(result[0].torrent);
-
-                        _self.get_info_torrents(result);
-
-                        return _res.json({success:true, result:result});
+                        var sub = _self.get_info_torrents(result)
+                        sub.subscribe(
+                            data => {
+                                return _res.json({success:true, result:data});
+                            }
+                        );
                     }
                 });
                 
@@ -277,7 +279,9 @@ export class tvshow_routes {
         _.forEach(links, (element, index)=>{
             let e = element;
             var link_splited = _.split(element.href, '/'); 
-            e["torrent"] = link_splited[0]+'//'+link_splited[2]+'/download/'+link_splited[4]+'/'+link_splited[5];
+            if(link_splited[3] === 'torrent_download' || link_splited[3] === 'torrent'){
+                e["torrent"] = link_splited[0]+'//'+link_splited[2]+'/download/'+link_splited[4]+'/'+link_splited[5];
+            }
             _links.push(e);
         });
         return _links;
@@ -285,20 +289,38 @@ export class tvshow_routes {
     //cuarto: obtener data en relación a seeders y leechers
     protected get_info_torrents(links){
         let _links = [];
-        _.forEach(links, (element)=>{
-            let _link = _.replace(element.href, '/download/','/torrent/');
-            console.log(_link);
+        let subject = new Rx.Subject();
+        var cont = 0;
+        var tam = links.length;
+        _.forEachRight(links, (element, index)=>{
+            let _link = _.replace(element.torrent, '/download/','/torrent/');
+            var e = element;
+            
             request(_link, (error, response, html)=>{
                 if(!error){
                     var $ = cheerio.load(html);
                     $('td.tabledata0').filter(function(index){
                         if(index===4){
-                            console.log($(this).text());
+                            var data = $(this).text();
+                            data = _.lowerCase(data);
+                            data = _.replace(data, ' update', '');
+                            var info = _.split(data, ' ');
+                            var info_torrent = {
+                                seeds: info[1],
+                                leechers: info[3]
+                            }
+                            e["info_torrent"] = info_torrent;
+                            _links.push(e);
+                            cont++;
+                            if(cont === tam){
+                                subject.next(_links);
+                            }
                         }
                         return true;
                     });
                 }
             });
         });
+        return subject;
     }
 }
