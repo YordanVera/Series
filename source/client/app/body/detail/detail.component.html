@@ -41,7 +41,10 @@
                 <tbody>
                     <tr *ngFor="let cap of season_selected.episodes">
                         <td>
-                            {{TVShow.title}} - S0{{season_selected.season_number}}E0{{cap.episode_number}}
+                            <div *ngIf="season_selected.season_number<=9 && cap.episode_number<=9">{{TVShow.title}} - S0{{season_selected.season_number}}E0{{cap.episode_number}}</div>
+                            <div *ngIf="season_selected.season_number<=9 && cap.episode_number>9">{{TVShow.title}} - S0{{season_selected.season_number}}E{{cap.episode_number}}</div>
+                            <div *ngIf="season_selected.season_number>9 && cap.episode_number<=9">{{TVShow.title}} - S{{season_selected.season_number}}E0{{cap.episode_number}}</div>
+                            <div *ngIf="season_selected.season_number>9 && cap.episode_number>9">{{TVShow.title}} - S{{season_selected.season_number}}E{{cap.episode_number}}</div>
                         </td>
                         <td>
                             <button md-raised-button color="primary" (click)="c.show()">
