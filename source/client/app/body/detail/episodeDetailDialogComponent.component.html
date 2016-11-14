@@ -11,24 +11,48 @@
                 <img src="http://image.tmdb.org/t/p/w154{{episode.still_path}}"><br> {{episode.overview}}
                 <br><br>
 
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Grupo</th>
-                            <th>Torrent</th>
-                            <th>Subtítulo</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>--</td>
-                            <td>--</td>
-                            <td>--</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="col-md-2">Grupo</th>
+                                <th class="col-md-5">Links</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let group of links">
+                                <td class="col-md-2">{{group.group}}</td>
+                                <td class="col-md-5">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Enlace</th>
+                                                    <th>.Torrent</th>
+                                                    <th>Size</th>
+                                                    <th>Subtítulo</th>
+                                                    <th>Seeders</th>
+                                                    <th>Leechers</th>
+                                                </tr>
+                                            </thead>
+                                        <tbody>
+                                            <tr *ngFor="let link of group.data">
+                                                <td><a href="{{link.link}}">Enlace</a></td>
+                                                <td><a href="{{link.torrent}}">.Torrent</a></td>
+                                                <td>{{link.info_torrent.size}}</td>
+                                                <td>sub</td>
+                                                <td>{{link.info_torrent.seeds}}</td>
+                                                <td>{{link.info_torrent.leechers}}</td>
+                                            </tr>
+                                        </tbody>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-
         </div>
     </div>
 </div>
