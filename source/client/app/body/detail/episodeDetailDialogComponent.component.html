@@ -10,8 +10,11 @@
             <div class="modal-body">
                 <img src="http://image.tmdb.org/t/p/w154{{episode.still_path}}"><br> {{episode.overview}}
                 <br><br>
-
-                <div class="table-responsive">
+                <div *ngIf="_isLoading">
+                    <md-progress-bar mode="indeterminate" color="primary"></md-progress-bar>
+                </div>
+                <div *ngIf="error">No data</div>
+                <div class="table-responsive" *ngIf="!error">
                     <table class="table table-hover">
                         <thead>
                             <tr>
