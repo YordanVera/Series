@@ -24,10 +24,16 @@ export class torrent_routes {
                 let _self = this;
                 let _res = res;
                 var query = '';
-                if(req.params.episode>9){
-                    query = req.params.TVShow_name+'.S0'+req.params.season+'E'+req.params.episode+' 720p site:extratorrent.cc';
-                }else{
-                    query = req.params.TVShow_name+'.S0'+req.params.season+'E0'+req.params.episode+' 720p site:extratorrent.cc';
+                if(req.params.season<=9 && req.params.episode<=9){
+                    query = req.params.TVShow_name+' S0'+req.params.season+' E0'+req.params.episode+' site:extratorrent.cc';
+                }else if(req.params.season<=9 && req.params.episode>9){
+                    query = req.params.TVShow_name+' S0'+req.params.season+' E'+req.params.episode+' site:extratorrent.cc';
+                }
+                else if(req.params.season>9 && req.params.episode<=9){
+                    query = req.params.TVShow_name+' S'+req.params.season+' E0'+req.params.episode+' site:extratorrent.cc';
+                }
+                else if(req.params.season>9 && req.params.episode>9){
+                    query = req.params.TVShow_name+' S'+req.params.season+' E'+req.params.episode+' site:extratorrent.cc';
                 }
                 google(query, function(err, res){
                     if(err){
@@ -37,12 +43,16 @@ export class torrent_routes {
                         result = _self.groups_release(result);
                         result = _self.delete_duplicate(result);
                         result = _self.torrent_link(result);
-                        var sub = _self.get_info_torrents(result)
-                        sub.subscribe(
-                            data => {
-                                return _res.json({success:true, result:data});
-                            }
-                        );
+                        if(result.length===0){
+                            return _res.json({success:false, result:'no data'});
+                        }else{
+                            var sub = _self.get_info_torrents(result)
+                            sub.subscribe(
+                                data => {
+                                        return _res.json({success:true, result:data});
+                                }
+                            );
+                        }
                     }
                 });
                 
@@ -52,20 +62,18 @@ export class torrent_routes {
     // [*] primero: se asegura que los links correspondan exclusivamente al capítulo
     protected select_links(links:any, TVShow_name: string, season:number, episode:number){
         let _links = [];
-        let TVShow_name_split = _.split(TVShow_name, ' ');
-        let name = '';
-        let i = 0;
-        while(i<(TVShow_name_split.length-1)){
-            name+=TVShow_name_split[i];
-            i++;
-        }
         _.forEach(links, (element)=>{
-            if(element.title.indexOf(name) !== -1){
+            let title=_.replace(element.title,'.',' ');
+            if(title.indexOf(TVShow_name) !== -1){
                 var query = '';
-                if(episode>9){
-                    query = 'S0'+season+'E'+episode;
-                }else{
+                if(season<=9 && episode<=9){
                     query = 'S0'+season+'E0'+episode;
+                }else if(season<=9 && episode>9){
+                    query = 'S0'+season+'E'+episode;
+                }else if(season>9 && episode<=9){
+                    query = 'S'+season+'E0'+episode;
+                }else if(season>9 && episode>9){
+                    query = 'S'+season+'E'+episode;
                 }
                 if(element.title.indexOf(query) !== -1){
                     if(element.href.indexOf('search') === -1){
@@ -139,7 +147,7 @@ export class torrent_routes {
         _.forEach(links, (element, index)=>{
             let e = element;
             var link_splited = _.split(element.href, '/'); 
-            if(link_splited[3] === 'torrent_download' || link_splited[3] === 'torrent' || link_splited[3] === 'torrent_files'){
+            if(link_splited[3] === 'torrent_download' || link_splited[3] === 'torrent' || link_splited[3] === 'torrent_files' || link_splited[3] === 'torrent_trackers'){
                 e["torrent"] = link_splited[0]+'//'+link_splited[2]+'/download/'+link_splited[4]+'/'+link_splited[5];
             }
             _links.push(e);
@@ -152,11 +160,15 @@ export class torrent_routes {
         let subject = new Rx.Subject();
         var cont = 0;
         var tam = links.length;
-  
+ 
         _.forEachRight(links, (element, index)=>{
             let _link = _.replace(element.torrent, '/download/','/torrent/');
             var e = element;
-            request(_link, (error, response, html)=>{
+            var options = {
+                url: _link,
+                method: 'GET'
+            };
+            request(options, (error, response, html)=>{
                 if(!error){
                     var $ = cheerio.load(html);
                     var err = $('h1.error').text();
@@ -198,6 +210,8 @@ export class torrent_routes {
                         }
                         cont++;
                     }
+                }else{
+                    console.log('error '+error);
                 }
             });
         });
