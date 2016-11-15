@@ -49,7 +49,6 @@ var DetailComponent = (function () {
     DetailComponent.prototype.selectSeason = function (id, season_number) {
         var _this = this;
         this.coverService.get_Season_Detail(id, season_number).subscribe(function (data) {
-            console.log(data.result);
             _this.season_selected = data.result;
             _this._isSeasonSelected = true;
         });

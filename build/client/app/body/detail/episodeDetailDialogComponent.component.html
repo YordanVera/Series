@@ -1,0 +1,61 @@
+<div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="lgModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+                <h4 class="modal-title">S0{{season.season_number}}E0{{episode.episode_number}}: {{episode.name}}</h4>
+            </div>
+            <div class="modal-body">
+                <img src="http://image.tmdb.org/t/p/w154{{episode.still_path}}"><br> {{episode.overview}}
+                <br><br>
+                <div *ngIf="_isLoading">
+                    <md-progress-bar mode="indeterminate" color="primary"></md-progress-bar>
+                </div>
+                <div *ngIf="error">No data</div>
+                <div class="table-responsive" *ngIf="!error">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="col-md-2">Grupo</th>
+                                <th class="col-md-5">Links</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let group of links">
+                                <td class="col-md-2">{{group.group}}</td>
+                                <td class="col-md-5">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Enlace</th>
+                                                    <th>.Torrent</th>
+                                                    <th>Size</th>
+                                                    <th>Subtítulo</th>
+                                                    <th>Seeders</th>
+                                                    <th>Leechers</th>
+                                                </tr>
+                                            </thead>
+                                        <tbody>
+                                            <tr *ngFor="let link of group.data">
+                                                <td><a href="{{link.link}}">Enlace</a></td>
+                                                <td><a href="{{link.torrent}}">.Torrent</a></td>
+                                                <td>{{link.info_torrent.size}}</td>
+                                                <td>sub</td>
+                                                <td>{{link.info_torrent.seeds}}</td>
+                                                <td>{{link.info_torrent.leechers}}</td>
+                                            </tr>
+                                        </tbody>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

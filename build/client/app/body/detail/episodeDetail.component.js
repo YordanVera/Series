@@ -9,23 +9,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var emitter_service_1 = require('./emitter/emitter.service');
-var AppComponent = (function () {
-    function AppComponent(emitter, viewContainerRef) {
-        this.emitter = emitter;
-        this.viewContainerRef = viewContainerRef;
+var episodeDetail = (function () {
+    function episodeDetail() {
     }
-    AppComponent = __decorate([
+    episodeDetail = __decorate([
         core_1.Component({
             moduleId: module.id,
-            selector: 'app',
-            templateUrl: './app.component.html',
-            providers: [emitter_service_1.EmitterService]
+            selector: 'episodeDetail',
+            templateUrl: './episodeDetail.component.html'
         }), 
-        __metadata('design:paramtypes', [emitter_service_1.EmitterService, core_1.ViewContainerRef])
-    ], AppComponent);
-    return AppComponent;
+        __metadata('design:paramtypes', [])
+    ], episodeDetail);
+    return episodeDetail;
 }());
-exports.AppComponent = AppComponent;
+exports.episodeDetail = episodeDetail;
 
-//# sourceMappingURL=app.component.js.map
+//# sourceMappingURL=episodeDetail.component.js.map

@@ -1,7 +1,7 @@
 "use strict";
 var mysql = require('mysql');
-var config_db_1 = require('../../../config/config_db');
 var _ = require('lodash');
+var config_db_1 = require('../../../config/config_db');
 var tvshow_routes = (function () {
     function tvshow_routes(app, tmdb_services) {
         this._app = app;

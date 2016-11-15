@@ -20,6 +20,8 @@ var body_component_1 = require('./body/body.component');
 var cover_component_1 = require('./body/cover/cover.component');
 var detail_component_1 = require('./body/detail/detail.component');
 var newDialog_component_1 = require('./header/newDialog.component');
+var episodeDetailDialogComponent_component_1 = require('./body/detail/episodeDetailDialogComponent.component');
+var ng2_bootstrap_1 = require('ng2-bootstrap/ng2-bootstrap');
 core_1.enableProdMode();
 var AppModule = (function () {
     function AppModule() {
@@ -32,17 +34,20 @@ var AppModule = (function () {
                 http_1.JsonpModule,
                 forms_1.FormsModule,
                 app_routing_module_1.AppRoutingModule,
-                material_1.MaterialModule.forRoot()],
+                material_1.MaterialModule.forRoot(),
+                ng2_bootstrap_1.Ng2BootstrapModule],
             declarations: [
                 app_component_1.AppComponent,
                 header_component_1.HeaderComponent,
                 body_component_1.BodyComponent,
                 newDialog_component_1.newDialogComponent,
+                episodeDetailDialogComponent_component_1.episodeDetailDialogComponent,
                 cover_component_1.CoverComponent,
                 detail_component_1.DetailComponent
             ],
             entryComponents: [
-                newDialog_component_1.newDialogComponent
+                newDialog_component_1.newDialogComponent,
+                episodeDetailDialogComponent_component_1.episodeDetailDialogComponent
             ],
             bootstrap: [app_component_1.AppComponent]
         }), 

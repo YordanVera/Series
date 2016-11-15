@@ -9,23 +9,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var emitter_service_1 = require('./emitter/emitter.service');
-var AppComponent = (function () {
-    function AppComponent(emitter, viewContainerRef) {
-        this.emitter = emitter;
-        this.viewContainerRef = viewContainerRef;
+var material_1 = require('@angular/material');
+var episodeDetailDialog = (function () {
+    function episodeDetailDialog(dialogRef) {
+        this.dialogRef = dialogRef;
     }
-    AppComponent = __decorate([
+    episodeDetailDialog.prototype.close = function () {
+        this.dialogRef.close();
+    };
+    episodeDetailDialog.prototype.acept = function (name) {
+        this.dialogRef.close(name);
+    };
+    episodeDetailDialog = __decorate([
         core_1.Component({
             moduleId: module.id,
-            selector: 'app',
-            templateUrl: './app.component.html',
-            providers: [emitter_service_1.EmitterService]
+            templateUrl: './episodeDetailDialog.component.html'
         }), 
-        __metadata('design:paramtypes', [emitter_service_1.EmitterService, core_1.ViewContainerRef])
-    ], AppComponent);
-    return AppComponent;
+        __metadata('design:paramtypes', [material_1.MdDialogRef])
+    ], episodeDetailDialog);
+    return episodeDetailDialog;
 }());
-exports.AppComponent = AppComponent;
+exports.episodeDetailDialog = episodeDetailDialog;
 
-//# sourceMappingURL=app.component.js.map
+//# sourceMappingURL=episodeDetailDialog.component.js.map
