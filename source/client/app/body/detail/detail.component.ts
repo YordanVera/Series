@@ -1,4 +1,4 @@
-import { Component, OnInit  }       from '@angular/core';
+import { Component }                from '@angular/core';
 import { ActivatedRoute, Params }   from '@angular/router';
 import { Location }                 from '@angular/common';
 import { CoverService }             from '../cover/cover.service';
@@ -13,7 +13,6 @@ import { TVShow }                   from '../cover/tvshow';
 export class DetailComponent {
     private TVShow  : TVShow;
     private season_selected;
-
     private _isLoading : boolean;
     private _isLoadingDetail : boolean;
     private _isSeasonSelected : boolean;

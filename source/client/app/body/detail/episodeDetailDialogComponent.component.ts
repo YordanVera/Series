@@ -21,6 +21,7 @@ export class episodeDetailDialogComponent {
     this._isLoading=true;
   }
   show(){
+    this.lgModal.config.backdrop = false;
     this.lgModal.show();
     this.linksService.get_Links(this.TVShow,this.season.season_number, this.episode.episode_number).subscribe(
         data => {
