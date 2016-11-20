@@ -4,7 +4,7 @@ import { Observable }                               from 'rxjs/Observable';
 import * as Rx                                      from "rxjs/Rx";
 
 @Injectable()
-export class TorrentService {
+export class LinksService {
     constructor(private http : Http){  }
 
     private handleError(error: any){
@@ -14,10 +14,9 @@ export class TorrentService {
         console.error(errMsg); // log to console instead
         return Observable.throw(errMsg);
     }
-    get_Torrents(TVShow_name : string, season : number, episode: number){
-        return this.http.get('/get_torrents/'+TVShow_name+'/'+season+'/'+episode)
+    get_Links(TVShow_name : string, season : number, episode: number){
+        return this.http.get('/get_links/'+TVShow_name+'/'+season+'/'+episode)
                         .map(res => res.json())
                         .catch(this.handleError);
     }
-
 }
