@@ -9,68 +9,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var torrent_service_1 = require('./torrent.service');
-var _ = require('lodash');
+var links_service_1 = require('./links.service');
 var episodeDetailDialogComponent = (function () {
-    function episodeDetailDialogComponent(torrentService) {
-        this.torrentService = torrentService;
+    function episodeDetailDialogComponent(linksService) {
+        this.linksService = linksService;
         this.error = false;
         this._isLoading = true;
     }
     episodeDetailDialogComponent.prototype.show = function () {
         var _this = this;
         this.lgModal.show();
-        this.torrentService.get_Torrents(this.TVShow, this.season.season_number, this.episode.episode_number).subscribe(function (data) {
-            var links = [];
+        this.linksService.get_Links(this.TVShow, this.season.season_number, this.episode.episode_number).subscribe(function (data) {
             if (data.success) {
-                _.forEachRight(data.result, function (element, index) {
-                    if (links.length === 0) {
-                        links.push({
-                            group: element.group,
-                            data: [
-                                {
-                                    title: element.title,
-                                    description: element.description,
-                                    href: element.href,
-                                    group: element.group,
-                                    info_torrent: element.info_torrent,
-                                    link: element.link,
-                                    torrent: element.torrent
-                                }
-                            ]
-                        });
-                    }
-                    else {
-                        var pos = _.findIndex(links, { 'group': element.group });
-                        if (pos > -1) {
-                            links[pos].data.push({
-                                title: element.title,
-                                description: element.description,
-                                href: element.href,
-                                group: element.group,
-                                info_torrent: element.info_torrent,
-                                link: element.link,
-                                torrent: element.torrent
-                            });
-                        }
-                        else {
-                            links.push({
-                                group: element.group,
-                                data: [
-                                    {
-                                        title: element.title,
-                                        description: element.description,
-                                        href: element.href,
-                                        group: element.group,
-                                        info_torrent: element.info_torrent,
-                                        link: element.link,
-                                        torrent: element.torrent
-                                    }
-                                ]
-                            });
-                        }
-                    }
-                });
+                _this.links = data.result;
                 _this.error = false;
                 _this._isLoading = false;
             }
@@ -78,7 +29,6 @@ var episodeDetailDialogComponent = (function () {
                 _this.error = true;
                 _this._isLoading = false;
             }
-            _this.links = links;
         });
     };
     __decorate([
@@ -103,9 +53,9 @@ var episodeDetailDialogComponent = (function () {
             selector: 'episode-modal',
             templateUrl: './episodeDetailDialogComponent.component.html',
             exportAs: 'child',
-            providers: [torrent_service_1.TorrentService]
+            providers: [links_service_1.LinksService]
         }), 
-        __metadata('design:paramtypes', [torrent_service_1.TorrentService])
+        __metadata('design:paramtypes', [links_service_1.LinksService])
     ], episodeDetailDialogComponent);
     return episodeDetailDialogComponent;
 }());

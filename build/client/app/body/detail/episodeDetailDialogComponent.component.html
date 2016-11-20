@@ -5,16 +5,20 @@
                 <button type="button" class="close" (click)="lgModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-                <h4 class="modal-title">S0{{season.season_number}}E0{{episode.episode_number}}: {{episode.name}}</h4>
+                <div *ngIf="season.season_number<=9 && episode.episode_number<=9"><h4 class="modal-title">S0{{season.season_number}}E0{{episode.episode_number}}: {{episode.name}}</h4></div>
+                <div *ngIf="season.season_number<=9 && episode.episode_number>9"><h4 class="modal-title">S0{{season.season_number}}E{{episode.episode_number}}: {{episode.name}}</h4></div>
+                <div *ngIf="season.season_number>9 && episode.episode_number<=9"><h4 class="modal-title">S{{season.season_number}}E0{{episode.episode_number}}: {{episode.name}}</h4></div>
+                <div *ngIf="season.season_number>9 && episode.episode_number>9"><h4 class="modal-title">S{{season.season_number}}E{{episode.episode_number}}: {{episode.name}}</h4></div>
             </div>
             <div class="modal-body">
                 <img src="http://image.tmdb.org/t/p/w154{{episode.still_path}}"><br> {{episode.overview}}
                 <br><br>
                 <div *ngIf="_isLoading">
                     <md-progress-bar mode="indeterminate" color="primary"></md-progress-bar>
+                    Realizando búsqueda...
                 </div>
                 <div *ngIf="error">No data</div>
-                <div class="table-responsive" *ngIf="!error">
+                <div class="table-responsive" *ngIf="!error && !_isLoading">
                     <table class="table table-hover">
                         <thead>
                             <tr>
@@ -30,20 +34,40 @@
                                         <table class="table table-hover">
                                             <thead>
                                                 <tr>
-                                                    <th>Enlace</th>
+                                                    <th>Link</th>
                                                     <th>.Torrent</th>
                                                     <th>Size</th>
-                                                    <th>Subtítulo</th>
+                                                    <th>Res</th>
+                                                    <th>Subs</th>
                                                     <th>Seeders</th>
                                                     <th>Leechers</th>
                                                 </tr>
                                             </thead>
                                         <tbody>
                                             <tr *ngFor="let link of group.data">
-                                                <td><a href="{{link.link}}">Enlace</a></td>
+                                                <td><a href="{{link.link}}">Ref</a></td>
                                                 <td><a href="{{link.torrent}}">.Torrent</a></td>
                                                 <td>{{link.info_torrent.size}}</td>
-                                                <td>sub</td>
+                                                <td>{{link.res}}</td>
+                                                <td>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Original</th>
+                                                                    <th>Link</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr *ngFor="let sub of group.subs">
+                                                                    <!--<td>{{sub.sub_desc}}</td>-->
+                                                                    <td><a [attr.href]='sub.link' tooltip="{{sub.sub_desc}}" [tooltipAppendToBody]="true">Enlace</a></td>
+                                                                    <td><a [attr.href]='sub.sub_link' >Bajar</a></td>
+                                                                </tr>
+                                                              </tbody>
+                                                        </table>
+                                                    </div>
+                                                </td>
                                                 <td>{{link.info_torrent.seeds}}</td>
                                                 <td>{{link.info_torrent.leechers}}</td>
                                             </tr>
