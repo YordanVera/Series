@@ -1,3 +1,6 @@
+**0.0.3.fly.2**
+- se agrega el detalle de cada capítulo dentro de un modal, en el se encuentran los links y los subtítulos relacionados con su versión.
+
 **0.0.3.fly.1**
 
 - se agrega el detalle por cada serie.
