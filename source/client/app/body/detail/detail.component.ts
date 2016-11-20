@@ -1,4 +1,4 @@
-import { Component, OnInit }        from '@angular/core';
+import { Component, OnInit  }       from '@angular/core';
 import { ActivatedRoute, Params }   from '@angular/router';
 import { Location }                 from '@angular/common';
 import { CoverService }             from '../cover/cover.service';
@@ -17,9 +17,6 @@ export class DetailComponent {
     private _isLoading : boolean;
     private _isLoadingDetail : boolean;
     private _isSeasonSelected : boolean;
-
-    private caps : Array<number>;
-
     constructor(private route           : ActivatedRoute,
                 private location        : Location,
                 private coverService    : CoverService){
@@ -56,7 +53,6 @@ export class DetailComponent {
     selectSeason(id:number, season_number:number){
         this.coverService.get_Season_Detail(id,season_number).subscribe(
             data => {
-                console.log(data.result);
                 this.season_selected=data.result;
                 this._isSeasonSelected=true;
             }

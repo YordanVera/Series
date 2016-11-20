@@ -35,15 +35,23 @@
                 <thead>
                     <tr>
                         <th>Episodio</th>
-                        <th>Torrent</th>
-                        <th>Subtítulo</th>
+                        <th>Detalle</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let cap of season_selected.episodes">
-                        <td>{{TVShow.title}} - S0{{season_selected.season_number}}E0{{cap.episode_number}}</td>
-                        <td>.torrent</td>
-                        <td>.srt</td>
+                        <td>
+                            <div *ngIf="season_selected.season_number<=9 && cap.episode_number<=9">{{TVShow.title}} - S0{{season_selected.season_number}}E0{{cap.episode_number}}</div>
+                            <div *ngIf="season_selected.season_number<=9 && cap.episode_number>9">{{TVShow.title}} - S0{{season_selected.season_number}}E{{cap.episode_number}}</div>
+                            <div *ngIf="season_selected.season_number>9 && cap.episode_number<=9">{{TVShow.title}} - S{{season_selected.season_number}}E0{{cap.episode_number}}</div>
+                            <div *ngIf="season_selected.season_number>9 && cap.episode_number>9">{{TVShow.title}} - S{{season_selected.season_number}}E{{cap.episode_number}}</div>
+                        </td>
+                        <td>
+                            <button md-raised-button color="primary" (click)="c.show()">
+                                Show
+                            </button>
+                            <episode-modal #c="child" [episode]='cap' [season]='season_selected' [TVShow]='TVShow.title'></episode-modal>
+                        </td>
                     </tr>
                 </tbody>
             </table>

@@ -1,8 +1,8 @@
-import * as express from "express";
-import * as mysql from 'mysql';
-import { tmdb_services } from '../../../tmdb/tmdb_services';
-import {config_db} from '../../../config/config_db';
-import * as _ from 'lodash';
+import * as express         from "express";
+import * as mysql           from 'mysql';
+import * as _               from 'lodash';
+import { tmdb_services }    from '../../../tmdb/tmdb_services';
+import { config_db }        from '../../../config/config_db';
 
 export class tvshow_routes {
     private _app            : express.Express;

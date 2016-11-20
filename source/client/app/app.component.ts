@@ -1,4 +1,4 @@
-import { Component, OnInit }    from '@angular/core';
+import { Component, OnInit, ViewContainerRef }    from '@angular/core';
 import { EmitterService }       from './emitter/emitter.service';
 @Component({
     moduleId    : module.id, 
@@ -7,5 +7,10 @@ import { EmitterService }       from './emitter/emitter.service';
     providers:[EmitterService]
 })
 export class AppComponent{
-    constructor(private emitter:EmitterService){  }
+    private viewContainerRef: ViewContainerRef;
+
+    constructor(private emitter:EmitterService,
+    viewContainerRef:ViewContainerRef){ 
+        this.viewContainerRef = viewContainerRef;
+     }
 }
