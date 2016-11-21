@@ -7,7 +7,7 @@
         <md-grid-tile [colspan]=3 [rowspan]=1>
             <div style="padding-right: 8%">
             <md-card>
-            <md-card-title>{{TVShow.title}}</md-card-title>
+            <md-card-title>{{TVShow.name}}</md-card-title>
             <md-card-subtitle>rating?</md-card-subtitle>
                 <md-card-content>
                     <p style="text-align: justify;">{{TVShow.data.overview}}</p>
@@ -43,16 +43,16 @@
                 <tbody>
                     <tr *ngFor="let cap of season_selected.episodes">
                         <td>
-                            <div *ngIf="season_selected.season_number<=9 && cap.episode_number<=9">{{TVShow.title}} - S0{{season_selected.season_number}}E0{{cap.episode_number}}</div>
-                            <div *ngIf="season_selected.season_number<=9 && cap.episode_number>9">{{TVShow.title}} - S0{{season_selected.season_number}}E{{cap.episode_number}}</div>
-                            <div *ngIf="season_selected.season_number>9 && cap.episode_number<=9">{{TVShow.title}} - S{{season_selected.season_number}}E0{{cap.episode_number}}</div>
-                            <div *ngIf="season_selected.season_number>9 && cap.episode_number>9">{{TVShow.title}} - S{{season_selected.season_number}}E{{cap.episode_number}}</div>
+                            <div *ngIf="season_selected.season_number<=9 && cap.episode_number<=9">{{TVShow.name}} - S0{{season_selected.season_number}}E0{{cap.episode_number}}</div>
+                            <div *ngIf="season_selected.season_number<=9 && cap.episode_number>9">{{TVShow.name}} - S0{{season_selected.season_number}}E{{cap.episode_number}}</div>
+                            <div *ngIf="season_selected.season_number>9 && cap.episode_number<=9">{{TVShow.name}} - S{{season_selected.season_number}}E0{{cap.episode_number}}</div>
+                            <div *ngIf="season_selected.season_number>9 && cap.episode_number>9">{{TVShow.name}} - S{{season_selected.season_number}}E{{cap.episode_number}}</div>
                         </td>
                         <td>
                             <button md-raised-button color="primary" (click)="c.show()">
                                 Show
                             </button>
-                            <episode-modal #c="child" [episode]='cap' [season]='season_selected' [TVShow]='TVShow.title'></episode-modal>
+                            <episode-modal #c="child" [episode]='cap' [season]='season_selected' [TVShow]='TVShow.name'></episode-modal>
                         </td>
                         <td><md-slide-toggle>Si/No</md-slide-toggle></td>
                         <td><md-slide-toggle>Si/No</md-slide-toggle></td>

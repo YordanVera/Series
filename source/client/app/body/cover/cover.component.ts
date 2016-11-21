@@ -13,7 +13,9 @@ export class CoverComponent implements OnInit {
     erroMessage : string;
     list_tvshows : TVShow[];
     constructor(private coverService: CoverService,
-                private emitter: EmitterService) {  }
+                private emitter: EmitterService) { 
+                    this.list_tvshows = new Array;
+                 }
     ngOnInit(){
         this.getTVShows();
         this.listenEmitterService();
@@ -22,6 +24,9 @@ export class CoverComponent implements OnInit {
         this.coverService.getAll_TVShows().subscribe(
             list_tvshows    => {
                 this.list_tvshows = list_tvshows;
+                if(typeof this.list_tvshows.length === 'undefined'){
+                    this.list_tvshows = new Array;
+                }
             },
             error           => this.erroMessage = <any>error
         );
@@ -30,7 +35,7 @@ export class CoverComponent implements OnInit {
         this.emitter.eventListen$.subscribe(
             event => {
                 if(event.type === 'new'){
-                    this.newTVShow(event.data.title);
+                    this.newTVShow(event.data.name);
                 }
                 else if (event.type==='delete'){
                     this.deleteTVShow();
@@ -48,8 +53,8 @@ export class CoverComponent implements OnInit {
                     this.coverService.get_TVShow_Detail(TVShow_name).subscribe(
                         data => {
                             let newTV_Show = new TVShow();
-                            newTV_Show.id_serie= result.id_serie;
-                            newTV_Show.title=TVShow_name;
+                            newTV_Show.id_tvshow= result.id_tvshow;
+                            newTV_Show.name=TVShow_name;
                             newTV_Show.data=data.result;
                             this.list_tvshows.push(newTV_Show);
                         }

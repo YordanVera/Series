@@ -27,13 +27,13 @@ export class DetailComponent {
     ngOnInit(): void {
         this.route.params.forEach((params: Params) => {
             let _data : any = params;
-            this.TVShow.title = _data.TVShow_name;
-            this.TVShow.id_serie = _data.id;
+            this.TVShow.name = _data.TVShow_name;
+            this.TVShow.id_tvshow = _data.id;
         });
         this.getDetail();
     }
     getDetail(){
-        this.coverService.get_TVShow_Detail(this.TVShow.title).subscribe(
+        this.coverService.get_TVShow_Detail(this.TVShow.name).subscribe(
             data => {
                 this.TVShow.data = data.result;
                 this._isLoading = false;
