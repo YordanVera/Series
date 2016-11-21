@@ -54,8 +54,14 @@
                             </button>
                             <episode-modal #c="child" [episode]='cap' [season]='season_selected' [TVShow]='TVShow.name'></episode-modal>
                         </td>
-                        <td><md-slide-toggle>Si/No</md-slide-toggle></td>
-                        <td><md-slide-toggle>Si/No</md-slide-toggle></td>
+                        <td><md-slide-toggle (change)="changeStatus(1, $event, cap, TVShow.id_tvshow)" [checked]="cap.downloaded" color="primary">
+                            <div *ngIf="cap.downloaded">Si</div>
+                            <div *ngIf="!cap.downloaded">No</div>
+                            </md-slide-toggle></td>
+                        <td><md-slide-toggle (change)="changeStatus(2, $event, cap, TVShow.id_tvshow)" [checked]="cap.viewed" color="primary">
+                            <div *ngIf="cap.viewed">Si</div>
+                            <div *ngIf="!cap.viewed">No</div>
+                            </md-slide-toggle></td>
                     </tr>
                 </tbody>
             </table>
