@@ -18,6 +18,7 @@ var episodeDetailDialogComponent = (function () {
     }
     episodeDetailDialogComponent.prototype.show = function () {
         var _this = this;
+        this.lgModal.config.backdrop = false;
         this.lgModal.show();
         this.linksService.get_Links(this.TVShow, this.season.season_number, this.episode.episode_number).subscribe(function (data) {
             if (data.success) {
