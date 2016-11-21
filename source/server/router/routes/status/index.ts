@@ -55,7 +55,7 @@ export class status_routes {
             if(!req.body){
                 return res.sendStatus(400);
             }else{
-                this._pool.query('UPDATE status SET downloaded, viewed WHERE id_status = ?', [req.body.downloaded, req.body.viewed, req.body.id_status], (error) => {
+                this._pool.query('UPDATE status SET downloaded=?, viewed=? WHERE id_status = ?', [req.body.downloaded, req.body.viewed, req.body.id_status], (error) => {
                     if (error)
                         return res.json({success: false, error: error});
                     else
