@@ -21,18 +21,22 @@ export class episodeDetailDialogComponent {
     this._isLoading=true;
   }
   show(){
-    this.lgModal.show();
-    this.linksService.get_Links(this.TVShow,this.season.season_number, this.episode.episode_number).subscribe(
-        data => {
-            if(data.success){
+      this.lgModal.config.backdrop = false;
+      this.lgModal.show();
+      this.linksService.get_Links(this.TVShow,this.season.season_number, this.episode.episode_number).subscribe(
+          data => {
+              if(data.success){
                 this.links=data.result;
                 this.error=false;
                 this._isLoading=false;
-            }else{
-              this.error=true;
-              this._isLoading=false;
+              }else{
+                this.error=true;
+                this._isLoading=false;
             }
-        }
-    );
+          }
+      );
+  }
+  _isImageAvailable(image){
+      return typeof image === 'string' ? true : false;
   }
 }

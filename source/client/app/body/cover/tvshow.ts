@@ -1,6 +1,6 @@
 export class TVShow {
-    id_serie    : number;
-    title       : string;
+    id_tvshow   : number;
+    name        : string;
     data        : any; 
 }
 

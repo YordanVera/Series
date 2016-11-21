@@ -29,40 +29,40 @@ export class tvshow_routes {
             if(!req.body)
                 return res.sendStatus(400);
             else
-                this._pool.query('SELECT id_serie, title FROM series', (error, rows, fields) => {
+                this._pool.query('SELECT id_tvshow, name FROM tvshow', (error, rows, fields) => {
                     if (error)
                         return res.json({success: false, error: error});
                     else
                         //get data api
                         var data =[];
                         rows.forEach((tvshow, index, rows) => {
-                            let subject = this._tmdb_services.getTVShowData(tvshow.title);
+                            let subject = this._tmdb_services.getTVShowData(tvshow.name);
                             subject.subscribe(
                                 (x:any) => {
                                     if(x.total_results === 1){
                                         data.push({
-                                            id_serie    : rows[index].id_serie,
-                                            title       : rows[index].title,
+                                            id_tvshow    : rows[index].id_tvshow,
+                                            name       : rows[index].name,
                                             data        : x.results[0]});
                                     }
                                     else{
                                         let tvshow = _.find(x.results, (o:any)=>{
                                             return (
-                                                o.name === rows[index].title &&
+                                                o.name === rows[index].name &&
                                                 o.poster_path.length > 1 &&
                                                 o.overview.length > 1
                                             );
                                         });
                                         data.push({
-                                                    id_serie    : rows[index].id_serie,
-                                                    title       : rows[index].title,
+                                                    id_tvshow    : rows[index].id_tvshow,
+                                                    name       : rows[index].name,
                                                     data        : tvshow});
                                     }
                                 },
                                 e   => {
                                     data.push({
-                                        id_serie    : rows[index].id_serie,
-                                        title       : rows[index].title,
+                                        id_tvshow    : rows[index].id_tvshow,
+                                        name       : rows[index].name,
                                         data        : e});
                                 },
                                 ()  => {
@@ -79,21 +79,21 @@ export class tvshow_routes {
             if(!req.body)
                 return res.sendStatus(400);
             else
-                this._pool.query('INSERT INTO series (title) VALUES (?)', [req.body.TVShow_name], (error, result) => {
+                this._pool.query('INSERT INTO tvshow (name) VALUES (?)', [req.body.TVShow_name], (error, result) => {
                     if (error) return res.json({success: false, error: error});
                     return res.json({
                         success: true,
-                        id_serie: result.insertId
+                        id_tvshow: result.insertId
                     });
                 });
         });
     }
     private del_tvshow(){
-        this._app.delete('/del_tvshow/:id_serie',(req, res) => {
+        this._app.delete('/del_tvshow/:id_tvshow',(req, res) => {
             if(!req.params)
                 return res.sendStatus(400);
             else
-                this._pool.query('DELETE FROM series WHERE id_serie = ?', [req.params.id_serie], (error) => {
+                this._pool.query('DELETE FROM tvshow WHERE id_tvshow = ?', [req.params.id_tvshow], (error) => {
                     if (error) return res.json({success: false, error: error});
                     return res.json({success: true});
                 });
@@ -104,7 +104,7 @@ export class tvshow_routes {
             if(!req.body){
                 return res.sendStatus(400);
             }else{
-                this._pool.query('UPDATE series SET title = ? WHERE id_serie = ?', [req.body.nombre, req.body.id_serie], (error) => {
+                this._pool.query('UPDATE tvshow SET name = ? WHERE id_tvshow = ?', [req.body.nombre, req.body.id_tvshow], (error) => {
                     if (error)
                         return res.json({success: false, error: error});
                     else
@@ -114,11 +114,11 @@ export class tvshow_routes {
         });
     }
     private get_tvshow_data(){
-        this._app.get('/get_tvshow_data/:title', (req, res)=>{
+        this._app.get('/get_tvshow_data/:name', (req, res)=>{
             if(!req.body)
                 return res.sendStatus(400)
             else
-                var subject : any = this._tmdb_services.getTVShowData(req.params.title);
+                var subject : any = this._tmdb_services.getTVShowData(req.params.name);
                 subject.subscribe(
                     x   => {
                         if(x.total_results === 1){
@@ -127,7 +127,7 @@ export class tvshow_routes {
                         else{
                             let tvshow = _.find(x.results, (o:any)=>{
                                             return (
-                                                o.name === req.params.title &&
+                                                o.name === req.params.name &&
                                                 o.poster_path.length > 1 &&
                                                 o.overview.length > 1
                                             );

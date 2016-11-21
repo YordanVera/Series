@@ -11,27 +11,37 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 var Observable_1 = require('rxjs/Observable');
-var SubsService = (function () {
-    function SubsService(http) {
+var StatusService = (function () {
+    function StatusService(http) {
         this.http = http;
     }
-    SubsService.prototype.handleError = function (error) {
+    StatusService.prototype.handleError = function (error) {
         var errMsg = (error.message) ? error.message :
             error.status ? error.status + " - " + error.statusText : 'Server error';
         console.error(errMsg); // log to console instead
         return Observable_1.Observable.throw(errMsg);
     };
-    SubsService.prototype.get_Subs = function (TVShow_name, season, episode, group) {
-        return this.http.get('/get_subs/' + TVShow_name + '/' + season + '/' + episode + '/' + group)
+    StatusService.prototype.get_status = function (id_tvshow, season) {
+        return this.http.get('/get_status/' + id_tvshow + '/' + season)
             .map(function (res) { return res.json(); })
             .catch(this.handleError);
     };
-    SubsService = __decorate([
+    StatusService.prototype.update_status = function (status) {
+        return this.http.put('/put_status', status)
+            .map(function (res) { return res.json(); })
+            .catch(this.handleError);
+    };
+    StatusService.prototype.add_status = function (status) {
+        return this.http.post('/add_status', status)
+            .map(function (res) { return res.json(); })
+            .catch(this.handleError);
+    };
+    StatusService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http])
-    ], SubsService);
-    return SubsService;
+    ], StatusService);
+    return StatusService;
 }());
-exports.SubsService = SubsService;
+exports.StatusService = StatusService;
 
-//# sourceMappingURL=subs.services.js.map
+//# sourceMappingURL=status.service.js.map

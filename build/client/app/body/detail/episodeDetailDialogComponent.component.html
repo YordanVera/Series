@@ -11,7 +11,9 @@
                 <div *ngIf="season.season_number>9 && episode.episode_number>9"><h4 class="modal-title">S{{season.season_number}}E{{episode.episode_number}}: {{episode.name}}</h4></div>
             </div>
             <div class="modal-body">
-                <img src="http://image.tmdb.org/t/p/w154{{episode.still_path}}"><br> {{episode.overview}}
+                <div *ngIf="_isImageAvailable(episode.still_path)"><img src="http://image.tmdb.org/t/p/w154{{episode.still_path}}"></div>
+                <div *ngIf="!_isImageAvailable(episode.still_path)"><img src="../app/images/NoImageAvailable.png"></div>
+                <br> {{episode.overview}}
                 <br><br>
                 <div *ngIf="_isLoading">
                     <md-progress-bar mode="indeterminate" color="primary"></md-progress-bar>
@@ -61,7 +63,7 @@
                                                             <tbody>
                                                                 <tr *ngFor="let sub of group.subs">
                                                                     <!--<td>{{sub.sub_desc}}</td>-->
-                                                                    <td><a [attr.href]='sub.link' tooltip="{{sub.sub_desc}}" [tooltipAppendToBody]="true">Enlace</a></td>
+                                                                    <td><a [attr.href]='sub.link' tooltip="{{sub.sub_desc}}" >Enlace</a></td>
                                                                     <td><a [attr.href]='sub.sub_link' >Bajar</a></td>
                                                                 </tr>
                                                               </tbody>

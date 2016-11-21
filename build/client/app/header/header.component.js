@@ -30,7 +30,7 @@ var HeaderComponent = (function () {
             if (_this.lastCloseResult) {
                 var event_2 = new event_1.Event();
                 event_2.type = "new";
-                event_2.data = { title: _this.lastCloseResult };
+                event_2.data = { name: _this.lastCloseResult };
                 _this.emitter.emit(event_2);
             }
             _this.dialogRef = null;

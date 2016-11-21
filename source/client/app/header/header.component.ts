@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit {
             if(this.lastCloseResult){
                 let event = new Event();
                 event.type="new";
-                event.data={title:this.lastCloseResult};
+                event.data={name:this.lastCloseResult};
                 this.emitter.emit(event);
             }
             this.dialogRef = null;
