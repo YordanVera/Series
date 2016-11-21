@@ -1,5 +1,8 @@
 #**1.0.0_RC.0**
 
+**features**
+- **server:** se crean rutas para control de estado de un episodio (descargado y/o visto) [17] (https://bitbucket.org/yordan_vera_castillo/series/issues/17/nueva-caracter-stica-rutas-para-el-control)
+
 **bug fixed**
 - **detalle de de un episodio**: se aplica un workarround para solucionar el problema [#16] (https://bitbucket.org/yordan_vera_castillo/series/issues/16/bug-modal-falla-al-abrir)
 
