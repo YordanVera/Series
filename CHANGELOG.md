@@ -6,6 +6,7 @@
 
 **bug fixed**
 - **detalle de de un episodio**: se aplica un workarround para solucionar el problema [#16] (https://bitbucket.org/yordan_vera_castillo/series/issues/16/bug-modal-falla-al-abrir)
+- **cliente:** Se corrige error cuando imagenes no existen en la información y se mostraban como rotas, se agrega una por defecto. [#15] (https://bitbucket.org/yordan_vera_castillo/series/issues/15/bug-no-se-cargan-correctamente-las)
 
 #**0.0.3.fly.2**
 - se agrega el detalle de cada capítulo dentro de un modal, en el se encuentran los links y los subtítulos relacionados con su versión.
