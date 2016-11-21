@@ -21,7 +21,9 @@
         <md-grid-list cols="5" rowHeight="307px">
             <md-grid-tile *ngFor="let season of TVShow.data.full.seasons" [colspan]="1" [rowspan]="1">
                 <button md-button (click)="selectSeason(TVShow.data.id, season.season_number)" style="padding: 0px">
-                    <img src="http://image.tmdb.org/t/p/w154{{season.poster_path}}"><br>
+                    <div *ngIf="_isImageAvailable(season.poster_path)"><img src="http://image.tmdb.org/t/p/w154{{season.poster_path}}"></div>
+                    <div *ngIf="!_isImageAvailable(season.poster_path)"><img src="../app/images/NoImageAvailable.png"></div>
+                    <br>
                     <strong>Season {{season.season_number}}</strong>
                 </button>
             </md-grid-tile>
