@@ -20,7 +20,7 @@ export class StatusService {
                         .catch(this.handleError);
     }
     update_status(status){
-        return this.http.post('/put_status',status)
+        return this.http.put('/put_status',status)
                         .map(res => res.json())
                         .catch(this.handleError);
     }
