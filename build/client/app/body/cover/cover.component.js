@@ -16,6 +16,7 @@ var CoverComponent = (function () {
     function CoverComponent(coverService, emitter) {
         this.coverService = coverService;
         this.emitter = emitter;
+        this.list_tvshows = new Array;
     }
     CoverComponent.prototype.ngOnInit = function () {
         this.getTVShows();
@@ -25,13 +26,16 @@ var CoverComponent = (function () {
         var _this = this;
         this.coverService.getAll_TVShows().subscribe(function (list_tvshows) {
             _this.list_tvshows = list_tvshows;
+            if (typeof _this.list_tvshows.length === 'undefined') {
+                _this.list_tvshows = new Array;
+            }
         }, function (error) { return _this.erroMessage = error; });
     };
     CoverComponent.prototype.listenEmitterService = function () {
         var _this = this;
         this.emitter.eventListen$.subscribe(function (event) {
             if (event.type === 'new') {
-                _this.newTVShow(event.data.title);
+                _this.newTVShow(event.data.name);
             }
             else if (event.type === 'delete') {
                 _this.deleteTVShow();
@@ -47,8 +51,8 @@ var CoverComponent = (function () {
             if (result.success) {
                 _this.coverService.get_TVShow_Detail(TVShow_name).subscribe(function (data) {
                     var newTV_Show = new tvshow_1.TVShow();
-                    newTV_Show.id_serie = result.id_serie;
-                    newTV_Show.title = TVShow_name;
+                    newTV_Show.id_tvshow = result.id_tvshow;
+                    newTV_Show.name = TVShow_name;
                     newTV_Show.data = data.result;
                     _this.list_tvshows.push(newTV_Show);
                 });

@@ -24,36 +24,36 @@ var tvshow_routes = (function () {
             if (!req.body)
                 return res.sendStatus(400);
             else
-                _this._pool.query('SELECT id_serie, title FROM series', function (error, rows, fields) {
+                _this._pool.query('SELECT id_tvshow, name FROM tvshow', function (error, rows, fields) {
                     if (error)
                         return res.json({ success: false, error: error });
                     else
                         //get data api
                         var data = [];
                     rows.forEach(function (tvshow, index, rows) {
-                        var subject = _this._tmdb_services.getTVShowData(tvshow.title);
+                        var subject = _this._tmdb_services.getTVShowData(tvshow.name);
                         subject.subscribe(function (x) {
                             if (x.total_results === 1) {
                                 data.push({
-                                    id_serie: rows[index].id_serie,
-                                    title: rows[index].title,
+                                    id_tvshow: rows[index].id_tvshow,
+                                    name: rows[index].name,
                                     data: x.results[0] });
                             }
                             else {
                                 var tvshow_1 = _.find(x.results, function (o) {
-                                    return (o.name === rows[index].title &&
+                                    return (o.name === rows[index].name &&
                                         o.poster_path.length > 1 &&
                                         o.overview.length > 1);
                                 });
                                 data.push({
-                                    id_serie: rows[index].id_serie,
-                                    title: rows[index].title,
+                                    id_tvshow: rows[index].id_tvshow,
+                                    name: rows[index].name,
                                     data: tvshow_1 });
                             }
                         }, function (e) {
                             data.push({
-                                id_serie: rows[index].id_serie,
-                                title: rows[index].title,
+                                id_tvshow: rows[index].id_tvshow,
+                                name: rows[index].name,
                                 data: e });
                         }, function () {
                             if (data.length === rows.length) {
@@ -70,23 +70,23 @@ var tvshow_routes = (function () {
             if (!req.body)
                 return res.sendStatus(400);
             else
-                _this._pool.query('INSERT INTO series (title) VALUES (?)', [req.body.TVShow_name], function (error, result) {
+                _this._pool.query('INSERT INTO tvshow (name) VALUES (?)', [req.body.TVShow_name], function (error, result) {
                     if (error)
                         return res.json({ success: false, error: error });
                     return res.json({
                         success: true,
-                        id_serie: result.insertId
+                        id_tvshow: result.insertId
                     });
                 });
         });
     };
     tvshow_routes.prototype.del_tvshow = function () {
         var _this = this;
-        this._app.delete('/del_tvshow/:id_serie', function (req, res) {
+        this._app.delete('/del_tvshow/:id_tvshow', function (req, res) {
             if (!req.params)
                 return res.sendStatus(400);
             else
-                _this._pool.query('DELETE FROM series WHERE id_serie = ?', [req.params.id_serie], function (error) {
+                _this._pool.query('DELETE FROM tvshow WHERE id_tvshow = ?', [req.params.id_tvshow], function (error) {
                     if (error)
                         return res.json({ success: false, error: error });
                     return res.json({ success: true });
@@ -100,7 +100,7 @@ var tvshow_routes = (function () {
                 return res.sendStatus(400);
             }
             else {
-                _this._pool.query('UPDATE series SET title = ? WHERE id_serie = ?', [req.body.nombre, req.body.id_serie], function (error) {
+                _this._pool.query('UPDATE tvshow SET name = ? WHERE id_tvshow = ?', [req.body.nombre, req.body.id_tvshow], function (error) {
                     if (error)
                         return res.json({ success: false, error: error });
                     else
@@ -111,18 +111,18 @@ var tvshow_routes = (function () {
     };
     tvshow_routes.prototype.get_tvshow_data = function () {
         var _this = this;
-        this._app.get('/get_tvshow_data/:title', function (req, res) {
+        this._app.get('/get_tvshow_data/:name', function (req, res) {
             if (!req.body)
                 return res.sendStatus(400);
             else
-                var subject = _this._tmdb_services.getTVShowData(req.params.title);
+                var subject = _this._tmdb_services.getTVShowData(req.params.name);
             subject.subscribe(function (x) {
                 if (x.total_results === 1) {
                     return res.json({ success: true, result: x.results[0] });
                 }
                 else {
                     var tvshow = _.find(x.results, function (o) {
-                        return (o.name === req.params.title &&
+                        return (o.name === req.params.name &&
                             o.poster_path.length > 1 &&
                             o.overview.length > 1);
                     });
