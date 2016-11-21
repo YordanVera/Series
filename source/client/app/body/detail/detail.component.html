@@ -36,6 +36,8 @@
                     <tr>
                         <th>Episodio</th>
                         <th>Detalle</th>
+                        <th>Descargado</th>
+                        <th>Visto</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -52,10 +54,11 @@
                             </button>
                             <episode-modal #c="child" [episode]='cap' [season]='season_selected' [TVShow]='TVShow.title'></episode-modal>
                         </td>
+                        <td><md-slide-toggle>Si/No</md-slide-toggle></td>
+                        <td><md-slide-toggle>Si/No</md-slide-toggle></td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
-
 </div>
