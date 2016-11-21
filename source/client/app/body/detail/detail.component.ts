@@ -52,6 +52,9 @@ export class DetailComponent {
             }
         );
     }
+    _isImageAvailable(image){
+        return typeof image === 'string' ? true : false;
+    }
     selectSeason(id:number, season_number:number){
         this.coverService.get_Season_Detail(id,season_number).subscribe(
             data => {
