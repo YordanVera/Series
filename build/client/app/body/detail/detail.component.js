@@ -49,6 +49,9 @@ var DetailComponent = (function () {
             _this._isLoadingDetail = false;
         });
     };
+    DetailComponent.prototype._isImageAvailable = function (image) {
+        return typeof image === 'string' ? true : false;
+    };
     DetailComponent.prototype.selectSeason = function (id, season_number) {
         var _this = this;
         this.coverService.get_Season_Detail(id, season_number).subscribe(function (data) {

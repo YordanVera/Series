@@ -32,6 +32,9 @@ var episodeDetailDialogComponent = (function () {
             }
         });
     };
+    episodeDetailDialogComponent.prototype._isImageAvailable = function (image) {
+        return typeof image === 'string' ? true : false;
+    };
     __decorate([
         core_1.ViewChild('lgModal'), 
         __metadata('design:type', Object)
