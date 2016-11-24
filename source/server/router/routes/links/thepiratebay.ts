@@ -2,13 +2,10 @@ import * as _           from 'lodash';
 import * as request     from 'request';
 import * as cheerio     from 'cheerio';
 import * as Rx          from 'rxjs/Rx';
-import { _group_list }  from './groups';
 var PirateBay = require('thepiratebay');
 
 export class thepiratebay {
-    constructor(){
-
-    }
+    constructor(){}
     public search(TVShow_name: string, season: number, episode: number){
         let subject = new Rx.Subject();
         let query = this.create_query(TVShow_name, season, episode);
