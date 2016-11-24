@@ -2,14 +2,9 @@ import * as _           from 'lodash';
 import * as request     from 'request';
 import * as cheerio     from 'cheerio';
 import * as Rx          from 'rxjs/Rx';
-import { Observable }   from 'rxjs/Observable';
-import { _group_list }  from './groups';
 
 export class extratorrent {
-
-    constructor(){
-
-    }
+    constructor(){}
     public search(TVShow_name: string, season: number, episode: number){
         let subject = new Rx.Subject();
         let query = this.create_query(TVShow_name, season, episode);
