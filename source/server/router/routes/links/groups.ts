@@ -14,6 +14,7 @@ export const _group_list = [
             'lol',
             'ntb',
             'river',
+            'rarbg',
             'shaanig',
             'sva',
             'xander'];
