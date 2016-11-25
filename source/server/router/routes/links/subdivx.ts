@@ -2,6 +2,7 @@ import * as _           from 'lodash';
 import * as request     from 'request';
 import * as cheerio     from 'cheerio';
 import * as Rx          from 'rxjs/Rx';
+import { _group_list }  from './groups';
 
 export class subdivx {
     constructor(){}
@@ -64,6 +65,8 @@ export class subdivx {
                         }
                     }
                 });
+                list_subtitles = this.get_resolution(list_subtitles);
+                list_subtitles = this.get_groups(list_subtitles);
                 subject.next(list_subtitles);
             }
         });
@@ -83,5 +86,52 @@ export class subdivx {
             cap = 'S'+season+'E'+episode;
         }
         return 'http://www.subdivx.com/index.php?buscar='+TVShow_name+'+'+cap+'&accion=5&masdesc=&subtitulos=1&realiza_b=1';
+    }
+    protected get_resolution(list_subs){
+        let _list = [];
+        _.forEach(list_subs, (e, i)=>{
+            let sub = e;
+            let idx_1080 = e.desc.indexOf('1080');
+            if(idx_1080>-1){
+                sub['res_1080'] = true;
+                let idx_720 = e.desc.indexOf('720');
+                if(idx_720>-1){
+                    sub['res_720'] = true;
+                }else{
+                    sub['res_720'] = false;
+                }
+            }else{
+                sub['res_1080'] = false;
+                let idx_720 = e.desc.indexOf('720');
+                if(idx_720>-1){
+                    sub['res_720'] = true;
+                }else{
+                    sub['res_720'] = false;
+                }
+            }
+            _list.push(sub);
+        });
+        return _list;
+    }
+    protected get_groups(list_subs){
+        let _list = [];
+        _.forEach(list_subs, (element, index)=>{
+            let sub = element;
+            sub['groups'] = [];
+            //se busca si hay un grupo
+            _.forEach(_group_list, (e, i)=>{
+                //si existe una coincidencia 
+                if(element.desc.indexOf(e)>-1){
+                    //se verifica que no este guardado el grupo
+                    let idx = _.findIndex(sub.groups, e);
+                    //de no estar, se guarda en la lista del groups del subtítulo.
+                    if(idx===-1){
+                        sub.groups.push(e);
+                    }
+                }
+            });
+            _list.push(sub);
+        });
+        return _list;
     }
 }
