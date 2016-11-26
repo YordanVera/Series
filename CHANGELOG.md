@@ -2,7 +2,7 @@
 
 **enhancement**
 
-- **server:** se deja de usar el paquete de google para las búsquedas de subtítulos en subdivx.com [#23] (https://bitbucket.org/yordan_vera_castillo/series/issues/23/mejora-dejar-de-usar-paquete-de-google)
+- **server:** se deja de usar el paquete de google para las búsquedas de subtítulos en subdivx.com [#23](https://bitbucket.org/yordan_vera_castillo/series/issues/23/mejora-dejar-de-usar-paquete-de-google)
 - **server:** se deja de usar el paquete de google para las búsquedas de subtítulos en extratorrent.cc [#24] (https://bitbucket.org/yordan_vera_castillo/series/issues/24/mejora-realizar-b-squeda-en-extratorrent)
 
 **features**
