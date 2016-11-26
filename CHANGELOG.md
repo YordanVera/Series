@@ -1,3 +1,18 @@
+#**1.1.0_RC.1**
+
+**enhancement**
+
+- **server:** se deja de usar el paquete de google para las búsquedas de subtítulos en subdivx.com [#23] (https://bitbucket.org/yordan_vera_castillo/series/issues/23/mejora-dejar-de-usar-paquete-de-google)
+- **server:** se deja de usar el paquete de google para las búsquedas de subtítulos en extratorrent.cc [#24] (https://bitbucket.org/yordan_vera_castillo/series/issues/24/mejora-realizar-b-squeda-en-extratorrent)
+
+**features**
+
+- **server:** se realizan búsquedas en ThePirateBay [#19] (https://bitbucket.org/yordan_vera_castillo/series/issues/19/nueva-caracter-stica-realizar-b-squeda-en)
+
+**fix**
+
+- **cliente:** corrección a detalle de un episodio [#25] (https://bitbucket.org/yordan_vera_castillo/series/issues/25/fix-correcci-n-a-detalle-de-un-episodio)
+
 #**1.0.0_RC.0**
 
 **features**
