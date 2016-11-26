@@ -14,7 +14,13 @@ export class thepiratebay {
                     _.forEach(results, (e)=>{
                         e['site'] = 'The Pirate Bay';
                     });
-                    subject.next(results);
+                    results = this.delete_duplicate(results);
+                    if(results.length>0){
+                        subject.next(results);
+                    }else{
+                        subject.next('no data');
+                    }
+                    
                 })
                 .catch(err => console.log(err))
         return subject;

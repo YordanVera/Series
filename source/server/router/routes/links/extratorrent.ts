@@ -66,7 +66,7 @@ export class extratorrent {
                                 }
                             });
                         }else{
-                            subject.error('no data');
+                            subject.next('no data');
                         }
                         return true;
                     });
