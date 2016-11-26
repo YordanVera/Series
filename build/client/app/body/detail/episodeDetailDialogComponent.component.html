@@ -25,12 +25,32 @@
                         <thead>
                             <tr>
                                 <th class="col-md-2">Grupo</th>
+                                <th class="col-md-2">Subs</th>
                                 <th class="col-md-5">Links</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let group of links">
                                 <td class="col-md-2">{{group.group}}</td>
+                                <td class="col-md-2">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Original</th>
+                                                    <th>Link</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let sub of group.subs">
+                                                    <td><a [attr.href]='sub.href' tooltip="{{sub.desc}}" >Enlace</a></td>
+                                                    <td><a [attr.href]='sub.link' >Bajar</a></td>
+                                                </tr>
+                                                </tbody>
+                                        </table>
+                                    </div>
+                                </td>
                                 <td class="col-md-5">
                                     <div class="table-responsive">
                                         <table class="table table-hover">
@@ -39,8 +59,7 @@
                                                     <th>Link</th>
                                                     <th>.Torrent</th>
                                                     <th>Size</th>
-                                                    <th>Res</th>
-                                                    <th>Subs</th>
+                                                    <th>Res</th>                                                    
                                                     <th>Seeders</th>
                                                     <th>Leechers</th>
                                                 </tr>
@@ -49,29 +68,10 @@
                                             <tr *ngFor="let link of group.data">
                                                 <td><a href="{{link.link}}">Ref</a></td>
                                                 <td><a href="{{link.torrent}}">.Torrent</a></td>
-                                                <td>{{link.info_torrent.size}}</td>
+                                                <td>{{link.size}}</td>
                                                 <td>{{link.res}}</td>
-                                                <td>
-                                                    <div class="table-responsive">
-                                                        <table class="table table-hover">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Original</th>
-                                                                    <th>Link</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr *ngFor="let sub of group.subs">
-                                                                    <!--<td>{{sub.sub_desc}}</td>-->
-                                                                    <td><a [attr.href]='sub.link' tooltip="{{sub.sub_desc}}" >Enlace</a></td>
-                                                                    <td><a [attr.href]='sub.sub_link' >Bajar</a></td>
-                                                                </tr>
-                                                              </tbody>
-                                                        </table>
-                                                    </div>
-                                                </td>
-                                                <td>{{link.info_torrent.seeds}}</td>
-                                                <td>{{link.info_torrent.leechers}}</td>
+                                                <td>{{link.seeders}}</td>
+                                                <td>{{link.leechers}}</td>
                                             </tr>
                                         </tbody>
                                         </table>
