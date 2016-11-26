@@ -39,13 +39,16 @@ export class extratorrent {
                                         name = _.values(_name)[1].toString();
                                         name = name.substring(5); //cut 'view '
                                         name = name.substring(0,name.length-8); // cut ' torrent' 
-                                        link = 'http://extratorrent.cc'+_.values(_name)[0].toString();
+                                        link = 'http://extratorrent.cc'+name;
                                     }else{
                                         _name = elem.children[2].children[2].attribs;
+                                        if(_name.class === 'c_tor'){
+                                            _name = elem.children[2].children[0].attribs;
+                                        }
                                         name = _.values(_name)[1].toString();
                                         name = name.substring(5); //cut 'view ' 
                                         name = name.substring(0,name.length-8); // cut ' torrent' 
-                                        link = 'http://extratorrent.cc'+_.values(_name)[0].toString();
+                                        link = 'http://extratorrent.cc'+name;
                                     }
                                     // console.log(name);
                                     links.push({
