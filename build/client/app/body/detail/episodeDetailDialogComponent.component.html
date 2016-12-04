@@ -67,7 +67,7 @@
                                         <tbody>
                                             <tr *ngFor="let link of group.data">
                                                 <td><a href="{{link.link}}">Ref</a></td>
-                                                <td><a href="{{link.torrent}}">.Torrent</a></td>
+                                                <td><a href="{{link.torrent}}">.Torrent</a> | <a [href]="link.magnetLink">Magnet</a></td>
                                                 <td>{{link.size}}</td>
                                                 <td>{{link.res}}</td>
                                                 <td>{{link.seeders}}</td>
