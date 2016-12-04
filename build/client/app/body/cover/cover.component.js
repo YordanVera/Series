@@ -36,6 +36,7 @@ var CoverComponent = (function () {
         this.emitter.eventListen$.subscribe(function (event) {
             if (event.type === 'new') {
                 _this.newTVShow(event.data.name);
+                console.log('new');
             }
             else if (event.type === 'delete') {
                 _this.deleteTVShow();

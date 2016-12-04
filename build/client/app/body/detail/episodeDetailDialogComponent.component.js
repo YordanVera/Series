@@ -9,10 +9,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var platform_browser_1 = require('@angular/platform-browser');
 var links_service_1 = require('./links.service');
+var _ = require('lodash');
 var episodeDetailDialogComponent = (function () {
-    function episodeDetailDialogComponent(linksService) {
+    function episodeDetailDialogComponent(linksService, sanitizer) {
         this.linksService = linksService;
+        this.sanitizer = sanitizer;
         this.error = false;
         this._isLoading = true;
     }
@@ -23,6 +26,11 @@ var episodeDetailDialogComponent = (function () {
         this.linksService.get_Links(this.TVShow, this.season.season_number, this.episode.episode_number).subscribe(function (data) {
             if (data.success) {
                 _this.links = data.result;
+                _.forEach(_this.links, function (element, index) {
+                    _.forEach(element.data, function (e, i) {
+                        e.magnetLink = _this.sanitizer.bypassSecurityTrustUrl(e.magnetLink);
+                    });
+                });
                 _this.error = false;
                 _this._isLoading = false;
             }
@@ -59,7 +67,7 @@ var episodeDetailDialogComponent = (function () {
             exportAs: 'child',
             providers: [links_service_1.LinksService]
         }), 
-        __metadata('design:paramtypes', [links_service_1.LinksService])
+        __metadata('design:paramtypes', [links_service_1.LinksService, platform_browser_1.DomSanitizer])
     ], episodeDetailDialogComponent);
     return episodeDetailDialogComponent;
 }());

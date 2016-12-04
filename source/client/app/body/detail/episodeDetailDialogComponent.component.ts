@@ -1,4 +1,5 @@
 import { Component, ViewChild, Input }  from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { LinksService }                 from './links.service';
 import * as _                           from 'lodash';
 @Component({
@@ -16,7 +17,7 @@ export class episodeDetailDialogComponent {
   private links;
   private error: boolean;
   private _isLoading: boolean;
-  constructor(private linksService: LinksService){
+  constructor(private linksService: LinksService, private sanitizer:DomSanitizer){
     this.error=false;
     this._isLoading=true;
   }
@@ -27,6 +28,11 @@ export class episodeDetailDialogComponent {
           data => {
               if(data.success){
                 this.links=data.result;
+                _.forEach(this.links, (element, index)=>{
+                  _.forEach(element.data, (e, i)=>{
+                    e.magnetLink = this.sanitizer.bypassSecurityTrustUrl(e.magnetLink);
+                  });
+                });
                 this.error=false;
                 this._isLoading=false;
               }else{

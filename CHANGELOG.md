@@ -1,16 +1,32 @@
+#**1.1.0_RC.1**
+
+**enhancement**
+
+- **server:** se deja de usar el paquete de google para las búsquedas de subtítulos en subdivx.com [#23](https://bitbucket.org/yordan_vera_castillo/series/issues/23/mejora-dejar-de-usar-paquete-de-google)
+- **server:** se deja de usar el paquete de google para las búsquedas de subtítulos en extratorrent.cc [#24](https://bitbucket.org/yordan_vera_castillo/series/issues/24/mejora-realizar-b-squeda-en-extratorrent)
+
+**features**
+
+- **server:** se realizan búsquedas en ThePirateBay [#19](https://bitbucket.org/yordan_vera_castillo/series/issues/19/nueva-caracter-stica-realizar-b-squeda-en)
+
+**fix**
+
+- **cliente:** corrección a detalle de un episodio [#25](https://bitbucket.org/yordan_vera_castillo/series/issues/25/fix-correcci-n-a-detalle-de-un-episodio)
+
 #**1.0.0_RC.0**
 
 **features**
 
-- **server:** se crean rutas para control de estado de un episodio (descargado y/o visto) [#17] (https://bitbucket.org/yordan_vera_castillo/series/issues/17/nueva-caracter-stica-rutas-para-el-control)
-- **cliente:** el usuario puede guardar el estado de un episodio, en caso de que ya haya sido descargado y/o visto [#13] (https://bitbucket.org/yordan_vera_castillo/series/issues/13/nueva-caracter-stica-marcar-episodios-como)
+- **server:** se crean rutas para control de estado de un episodio (descargado y/o visto) [#17](https://bitbucket.org/yordan_vera_castillo/series/issues/17/nueva-caracter-stica-rutas-para-el-control)
+- **cliente:** el usuario puede guardar el estado de un episodio, en caso de que ya haya sido descargado y/o visto [#13](https://bitbucket.org/yordan_vera_castillo/series/issues/13/nueva-caracter-stica-marcar-episodios-como)
 
 **bug fixed**
 
-- **detalle de de un episodio**: se aplica un workarround para solucionar el problema [#16] (https://bitbucket.org/yordan_vera_castillo/series/issues/16/bug-modal-falla-al-abrir)
-- **cliente:** Se corrige error cuando imagenes no existen en la información y se mostraban como rotas, se agrega una por defecto. [#15] (https://bitbucket.org/yordan_vera_castillo/series/issues/15/bug-no-se-cargan-correctamente-las)
+- **detalle de de un episodio**: se aplica un workarround para solucionar el problema [#16](https://bitbucket.org/yordan_vera_castillo/series/issues/16/bug-modal-falla-al-abrir)
+- **cliente:** Se corrige error cuando imagenes no existen en la información y se mostraban como rotas, se agrega una por defecto. [#15](https://bitbucket.org/yordan_vera_castillo/series/issues/15/bug-no-se-cargan-correctamente-las)
 
 #**0.0.3.fly.2**
+
 - se agrega el detalle de cada capítulo dentro de un modal, en el se encuentran los links y los subtítulos relacionados con su versión.
 
 #**0.0.3.fly.1**
