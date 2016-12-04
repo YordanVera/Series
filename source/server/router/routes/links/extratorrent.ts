@@ -55,7 +55,7 @@ export class extratorrent {
                                         'name'      :name,
                                         'torrent'   :'http://extratorrent.cc'+_.values(_torrent)[0],
                                         'link'      : link,
-                                        'magnet'    :_.values(_magnet)[0],
+                                        'magnetLink'    :_.values(_magnet)[0],
                                         'added'     :_.values(_added)[0],
                                         'size'      :_.values(_size)[0],
                                         'seeders'   :_.values(_seeders)[0],
